@@ -1,8 +1,4 @@
 import streamlit as st
-from langdetect import detect, DetectorFactory
-
-# Postavljanje fabrika za replikaciju rezultata
-DetectorFactory.seed = 0
 
 # Definiši ključne reči za različite jezike
 bosnian_keywords = [
@@ -32,27 +28,20 @@ english_keywords = [
 ]
 
 def detect_language(content):
-    try:
-        lang = detect(content)
-        return lang
-    except:
+    # Proverava jezik na osnovu ključnih reči
+    if any(keyword in content for keyword in bosnian_keywords):
+        return "bosnian"
+    elif any(keyword in content for keyword in german_keywords):
+        return "german"
+    elif any(keyword in content for keyword in english_keywords):
+        return "english"
+    else:
         return "unknown"
 
 def generate_response(messages):
     for msg in messages:
         content = msg["content"].lower()
         language = detect_language(content)
-        st.write(f"Detected language: {language}")  # Debugging output
-
-        # Prepoznavanje jezika na osnovu ključnih reči
-        if any(keyword in content for keyword in bosnian_keywords):
-            language = "bosnian"
-        elif any(keyword in content for keyword in german_keywords):
-            language = "german"
-        elif any(keyword in content for keyword in english_keywords):
-            language = "english"
-        else:
-            language = "unknown"
 
         # Ako se pitanje odnosi na ime na bilo kojem jeziku
         if language == "bosnian" and any(keyword in content for keyword in ["kako se zoves", "ime"]):
