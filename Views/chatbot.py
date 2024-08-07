@@ -63,27 +63,6 @@ def generate_response(messages):
         if any(keyword in content for keyword in ["what year did you work at BH Telecom", "telecom"]) and any(keyword in content for keyword in english_keywords):
             return "I worked in the BH Telecom company in the period from 01/2015 to 07/2015 where I was in the position of Technical Support for Residential users, you can find about this position on the about me page."
 
-
-    # Prolazi kroz sve poruke
-    for msg in messages:
-        content = msg["content"].lower()
-
-        # Ako se pitanje odnosi na ime na bilo kojem jeziku
-        if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["kako se zoves", "ime"]):
-            return "Moje ime je Amar Helac"
-        if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["wie heißt du", "name"]):
-            return "Mein Name ist Amar Helac"
-        if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what is your name", "name"]):
-            return "My name is Amar Helac"
-
-        # Ako se pitanje odnosi na buduće planove
-        if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koji su tvoji budući planovi", "planovi", "cilje"]):
-            return "Imam veliki interes da se bavim konkretnije Devops dijelom te svi moji planovi vode ka tom cilju"
-        if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "Ziel"]):
-            return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
-        if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what are your future plans", "plans", "goal"]):
-            return "I have a great interest in dealing more specifically with the Devops part, and all my plans lead to that goal"
-
         # Ako se pitanje odnosi na radno mesto 1
         if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koje godine si radio u foreo", "foreo"]):
             return "U kompaniji Foreo sam radio u periodu od 11/2021 do 02/2024 gdje sam bio na poziciji IT support specialist te kasnije Sys admin. Detaljnije o navednoj poziciji možete pronaći na stranici about me"
@@ -106,15 +85,15 @@ def generate_response(messages):
         if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["in welchem jahr haben sie bei capital market solutions gearbeitet", "capital market solutions", "CMS"]):
             return "Ich habe im Zeitraum von 06/2020 bis 10/2020 bei Capital Market Solutions gearbeitet, wo ich die Position des IT-Wissenschaftlers innehatte. Weitere Details zu dieser Stelle finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at capital market solutions", "capital market solutions", "CMS"]):
-            return "I worked at Capital Market Solutions in the period from 06/2020 to 10/2020 where I was in the position of IT Scientist. You can find more details about this position on the about me page"
+            return "I worked at Capital Market Solutions from 06/2020 to 10/2020 where I was in the position of IT Scientist. You can find more details about this position on the about me page"
 
         # Ako se pitanje odnosi na radno mesto 4
-        if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koje godine si radio u payten", "payten"]):
-            return "U kompaniji Payten sam radio u periodu od 03/2019 do 02/2020 gdje sam bio na poziciji Tehnička podrška za POS terminale i ATM uređaje. Detaljnije o navednoj poziciji možete pronaći na stranici about me"
-        if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["in welchem jahr haben sie bei payten gearbeitet", "payten"]):
-            return "Ich habe im Zeitraum von 03/2019 bis 02/2020 bei Payten gearbeitet, wo ich die Position des technischen Supports für POS-Terminals und Geldautomaten innehatte. Weitere Details zu dieser Stelle finden Sie auf der Seite Über mich."
-        if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at payten", "payten"]):
-            return "I worked at Payten in the period from 03/2019 to 02/2020 where I was in the position of Technical Support for POS terminals and ATM devices. You can find more details about this position on the about me page"
+        if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koje godine si radio u telinvest", "telinvest"]):
+            return "U kompaniji Telinvest sam radio u periodu od 03/2015 do 10/2016 gdje sam bio na poziciji Tehnička podrška korisnicima te dodatne poslove. Detaljnije o navednoj poziciji možete pronaći na stranici about me"
+        if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["in welchem jahr haben sie bei telinvest gearbeitet", "telinvest"]):
+            return "Ich habe im Zeitraum von 03/2015 bis 10/2016 bei Telinvest gearbeitet, wo ich die Position des technischen Supports für Benutzer und zusätzlicher Aufgaben innehatte. Weitere Details zu dieser Stelle finden Sie auf der Seite Über mich."
+        if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at telinvest", "telinvest"]):
+            return "I worked at Telinvest from 03/2015 to 10/2016 where I was in the position of Technical Support for Users and additional tasks. You can find more details about this position on the about me page"
         # Ako se pitanje odnosi na radno mesto 5
         if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koje godine si radio u ataco", "ataco"]):
             return "U kompaniji Ataco sam radio u periodu od 09/2018 do 03/2019 gdje sam bio na poziciji Tehnička podrška. Detaljnije o navednoj poziciji možete pronaći na stranici about me"
