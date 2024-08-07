@@ -1,8 +1,20 @@
-import random
-import time
 import streamlit as st
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# Inicijalizacija modela i tokenizatora
+model_name = "gpt2"  # Možete koristiti drugi model ako želite
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
 
 def generate_response(messages):
+    user_input = " ".join([msg["content"] for msg in messages])
+
+    # Tokenizacija i generisanje odgovora
+    inputs = tokenizer(user_input, return_tensors="pt")
+    outputs = model.generate(inputs["input_ids"], max_length=150, num_return_sequences=1)
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    # Provjera na poznate ključne riječi
     bosnian_keywords = [
         "radno iskustvo", "gdje si radio", "See Contact", "2014", "koje godine si radio u BH Telecom",
         "telecom", "Telinvest", "koje godine si radio u Telinvest", "2015",
@@ -39,7 +51,7 @@ def generate_response(messages):
     for msg in messages:
         content = msg["content"].lower()
 
-        # Prepoznaj ime
+        # Provjerite ključne riječi i generišite odgovor
         if any(keyword in content for keyword in ["kako se zoves", "ime"]) and any(keyword in content for keyword in bosnian_keywords):
             return "Moje ime je Amar Helac"
         if any(keyword in content for keyword in ["wie heißt du", "name"]) and any(keyword in content for keyword in german_keywords):
@@ -128,7 +140,8 @@ def generate_response(messages):
             return "Ich habe im Zeitraum von 01/2015 bis 07/2015 bei See Contact gearbeitet, wo ich die Position des technischen Supports für Privatanwender innehatte. Informationen zu dieser Position finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at See Contact","2014", "See Contact"]):
             return "I worked at See Contact in the period from 01/2015 to 07/2015 where I was in the position of Technical Support for Residential users, you can find about the said position on the about me page."
-    return "I'm not sure about that. Could you please clarify your question?"
+# Ako nijedna ključna riječ nije prepoznata
+    return response  # Vraća generisani odgovor iz modela
 
 # Example Streamlit app
 st.title("Chat Bot")
@@ -137,7 +150,6 @@ st.write("Ask me anything about my work experience!")
 user_input = st.text_input("Your question:")
 if st.button("Submit"):
     with st.spinner("Generating response..."):
-        time.sleep(1)
         messages = [{"content": user_input}]
         response = generate_response(messages)
         st.write(response)
