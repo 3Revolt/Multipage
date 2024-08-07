@@ -59,9 +59,9 @@ def generate_response(messages):
         if any(keyword in content for keyword in ["koje godine si radio u BH Telecom", "telecom"]) and any(keyword in content for keyword in bosnian_keywords):
             return "U kompaniji BH Telecom sam radio u periodu od 08/2014 do 12/2014 gdje sam bio na poziciji Technical Support za Residential korisnike, o navednoj poziciji možete pronaći na stranici about me"
         if any(keyword in content for keyword in ["in welchem jahr haben sie bei BH Telecom gearbeitet", "telecom"]) and any(keyword in content for keyword in german_keywords):
-            return "Ich habe im Zeitraum von 01/2015 bis 07/2015 bei der Firma BH Telecom gearbeitet, wo ich die Position des technischen Supports für Privatanwender innehatte. Informationen zu dieser Position finden Sie auf der Seite Über mich."
+            return "Ich habe im Zeitraum von 08/2014 bis 12/2014 bei der Firma BH Telecom gearbeitet, wo ich als Technical Support für Residential-Kunden tätig war. Details zu dieser Position finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in ["what year did you work at BH Telecom", "telecom"]) and any(keyword in content for keyword in english_keywords):
-            return "I worked in the BH Telecom company in the period from 01/2015 to 07/2015 where I was in the position of Technical Support for Residential users, you can find about this position on the about me page."
+            return "I worked in the BH Telecom company in the period from 08/2014 to 12/2014 where I was in the position of Technical Support for Residential users, you can find about this position on the about me page."
 
         # Ako se pitanje odnosi na radno mesto 1
         if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koje godine si radio u foreo", "foreo"]):
@@ -94,6 +94,7 @@ def generate_response(messages):
             return "Ich habe im Zeitraum von 03/2015 bis 10/2016 bei Telinvest gearbeitet, wo ich die Position des technischen Supports für Benutzer und zusätzlicher Aufgaben innehatte. Weitere Details zu dieser Stelle finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at telinvest", "telinvest"]):
             return "I worked at Telinvest from 03/2015 to 10/2016 where I was in the position of Technical Support for Users and additional tasks. You can find more details about this position on the about me page"
+        
         # Ako se pitanje odnosi na radno mesto 5
         if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koje godine si radio u ataco", "ataco"]):
             return "U kompaniji Ataco sam radio u periodu od 09/2018 do 03/2019 gdje sam bio na poziciji Tehnička podrška. Detaljnije o navednoj poziciji možete pronaći na stranici about me"
@@ -127,22 +128,16 @@ def generate_response(messages):
             return "Ich habe im Zeitraum von 01/2015 bis 07/2015 bei See Contact gearbeitet, wo ich die Position des technischen Supports für Privatanwender innehatte. Informationen zu dieser Position finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at See Contact","2014", "See Contact"]):
             return "I worked at See Contact in the period from 01/2015 to 07/2015 where I was in the position of Technical Support for Residential users, you can find about the said position on the about me page."
-        
-            # Ako nijedna ključna reč nije pronađena, možeš vratiti neku generičku poruku na sve tri jezike
-    return (
-        "Nisam pronašao relevantne ključne reči u porukama.Nažalost trenutno nisam podešen za neku napredniju konverzaciju već samo vezano za moj CV.Pokušatje kao npr: Koje godine si radio u Foreo.\n"  # Bosanski
-        "I could not find relevant keywords in the messages.I am not currently set up for a more advanced conversation, but only related to my CV.Attempts such as: What year did you work at Foreo.\n"  # Engleski
-        "Ich konnte keine relevanten Schlüsselwörter in den Nachrichten finden.Leider bin ich derzeit nicht auf ein weiterführendes Gespräch eingestellt, sondern nur auf meinen Lebenslauf bezogen.Versuche wie: In welchem ​​Jahr haben Sie bei Foreo gearbeitet?"  # Nemački
-    )
+    return "I'm not sure about that. Could you please clarify your question?"
 
-# Streamlit aplikacija
+# Example Streamlit app
 st.title("Chat Bot")
+st.write("Ask me anything about my work experience!")
 
-user_input = st.text_input("Unesite svoje pitanje:")
-if st.button("Pošalji"):
-    if user_input:
-        with st.spinner("Bot odgovara..."):
-            response = generate_response([{"content": user_input}])
-            st.write(response)
-    else:
-        st.warning("Molimo unesite pitanje.")
+user_input = st.text_input("Your question:")
+if st.button("Submit"):
+    with st.spinner("Generating response..."):
+        time.sleep(1)
+        messages = [{"content": user_input}]
+        response = generate_response(messages)
+        st.write(response)
