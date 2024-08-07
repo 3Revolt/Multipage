@@ -4,3 +4,4 @@ email-validator==2.1.2
 openai==0.28
 transformers==4.43.3
 torch==2.2.0
+numpy<2
