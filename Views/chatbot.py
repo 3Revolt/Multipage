@@ -1,58 +1,49 @@
 import openai
 import streamlit as st
-import time
 
-# Postavi OpenAI API ključ
-openai.api_key = st.secrets["openai"]["api_key"]
+st.title("ChatGPT-like Clone")
 
-def get_chatgpt_response(messages):
-    print("Sending request to OpenAI API...")
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=150
-        )
-        print("Received response from OpenAI API.")
-        return response.choices[0].message['content'].strip()
-    except openai.error.RateLimitError as e:
-        st.error("Rate limit exceeded. Please check your OpenAI plan and usage.")
-        print(f"RateLimitError: {e}")
-        time.sleep(5)  # Dodajte kašnjenje pre nego što ponovo pokušate
-        return "Rate limit exceeded. Please try again later."
-    except openai.error.OpenAIError as e:
-        st.error("An OpenAI error occurred.")
-        print(f"OpenAIError: {e}")
-        return "An error occurred with the OpenAI API."
-    except Exception as e:
-        st.error("An error occurred while processing the request.")
-        print(f"Error: {e}")
-        return "An unexpected error occurred."
-    return None
+openai.api_key = st.secrets["OPEN_API_KEY"]
 
-st.title("Chatbot")
 
-# Inicijalizacija chat istorije
+# Set a default model
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
+
+
+# Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Prikaz chat poruka iz istorije na ponovno učitavanje aplikacije
+
+
+# Display chat messages from history on app rerun
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Prihvati korisnički unos
-if prompt := st.chat_input("What is up?"):
-    # Dodaj korisničku poruku u istoriju chat-a
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # Prikaz korisničke poruke u chat message kontejneru
+
+# Accept user input
+prompt = st.chat_input("What is up")
+if prompt :
+
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Prikaz odgovora asistenta u chat message kontejneru
-    with st.chat_message("assistant"):
-        # Pripremi sve poruke za API poziv
-        response = get_chatgpt_response(st.session_state.messages)
-        st.markdown(response)  # Prikaz konačnog odgovora
-        # Dodaj odgovor asistenta u istoriju chat-a
-        st.session_state.messages.append({"role": "assistant", "content": response})
+st.session_state.messages.append({"role": "user", "content": prompt})
+
+with st.chat_message("assistant"):
+    message_placeholder = st.empty()
+    full_response = ""
+    for response in openai.ChatCompletion.create(
+        model=st.session_state["openai_model"],
+        messages=[
+            {"role": m["role"], "content": m["content"]}
+            for m in st.session_state.messages
+            ],
+            stream=True,
+    ):
+        full_response += response.choices[0].delta.get("content", "")
+        message_placeholder.markdown(full_response + "|")
+    message_placeholder.markdown(full_response)
+st.session_state.messages.append({"role": "assistant", "content": full_response})
