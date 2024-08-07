@@ -120,7 +120,13 @@ def generate_response(messages):
             return "Ich habe im Zeitraum von 01/2015 bis 07/2015 bei See Contact gearbeitet, wo ich die Position des technischen Supports für Privatanwender innehatte. Informationen zu dieser Position finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at See Contact","2014", "See Contact"]):
             return "I worked at See Contact in the period from 01/2015 to 07/2015 where I was in the position of Technical Support for Residential users, you can find about the said position on the about me page."
-        return "Sorry, I didn't understand your question."
+        
+            # Ako nijedna ključna reč nije pronađena, možeš vratiti neku generičku poruku na sve tri jezike
+    return (
+        "Nisam pronašao relevantne ključne reči u porukama.Nažalost trenutno nisam podešen za neku napredniju konverzaciju već samo vezano za moj CV.Pokušatje kao npr: Koje godine si radio u Foreo.\n"  # Bosanski
+        "I could not find relevant keywords in the messages.I am not currently set up for a more advanced conversation, but only related to my CV.Attempts such as: What year did you work at Foreo.\n"  # Engleski
+        "Ich konnte keine relevanten Schlüsselwörter in den Nachrichten finden.Leider bin ich derzeit nicht auf ein weiterführendes Gespräch eingestellt, sondern nur auf meinen Lebenslauf bezogen.Versuche wie: In welchem ​​Jahr haben Sie bei Foreo gearbeitet?"  # Nemački
+    )
 
 # Streamlit aplikacija
 st.title("Chat Bot")
