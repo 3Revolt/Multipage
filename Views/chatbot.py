@@ -1,5 +1,6 @@
 import openai
 import streamlit as st
+import time
 
 st.title("ChatGPT-like Clone")
 
@@ -12,7 +13,7 @@ except KeyError as e:
 
 # Set a default model
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
+    st.session_state["openai_model"] = "gpt-3.5-turbo"  # or "text-davinci-003"
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -34,21 +35,27 @@ if prompt:
         message_placeholder = st.empty()
         full_response = ""
         
-        # Attempt to create a chat completion
-        try:
-            for response in openai.ChatCompletion.create(
-                model=st.session_state["openai_model"],
-                messages=[
-                    {"role": m["role"], "content": m["content"]}
-                    for m in st.session_state.messages
-                ],
-                stream=True,
-            ):
-                full_response += response.choices[0].delta.get("content", "")
-                message_placeholder.markdown(full_response + "|")
-        except openai.error.OpenAIError as e:
-            st.error(f"OpenAI API error: {e}")
-            st.stop()
+        # Retry logic for rate limits
+        retries = 5
+        for attempt in range(retries):
+            try:
+                for response in openai.ChatCompletion.create(
+                    model=st.session_state["openai_model"],
+                    messages=[
+                        {"role": m["role"], "content": m["content"]}
+                        for m in st.session_state.messages
+                    ],
+                    stream=True,
+                ):
+                    full_response += response.choices[0].delta.get("content", "")
+                    message_placeholder.markdown(full_response + "|")
+                break  # Break the loop if successful
+            except openai.error.RateLimitError as e:
+                st.warning(f"Rate limit exceeded. Retrying in {2 ** attempt} seconds...")
+                time.sleep(2 ** attempt)  # Exponential backoff
+            except openai.error.OpenAIError as e:
+                st.error(f"OpenAI API error: {e}")
+                st.stop()
 
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
