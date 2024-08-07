@@ -1,5 +1,31 @@
 import streamlit as st
 
+# Definiši ključne reči za različite jezike
+bosnian_keywords = [
+    "radno iskustvo", "See Contact", "2014", "koje godine si radio u BH Telecom", "telecom", "Telinvest",
+    "koje godine si radio u Telinvest", "2015", "koje godine si radio u logosoftu", "koje godine si radio u ataco",
+    "ataco", "logosoft", "koje godine si radio u foreo", "koje godine si radio u logosoftu", "logosoft", "payten",
+    "koje godine si radio u capital market solutions", "koje godine si radio u payten", "CMS", "foreo", "poslovi",
+    "koji su tvoji budući planovi", "planovi", "gdje si radio", "radio", "sada", "kako da te kontaktiram", "kontakt",
+    "kako se zoves", "ime", "Kako si?", "kako si ti?", "šta ima?", "šta radiš?", "gdje trenutno radiš"
+]
+german_keywords = [
+    "arbeitsplätze", "See Contact", "2014", "in welchem jahr haben sie bei BH Telecom gearbeitet", "telecom",
+    "Telinvest", "in welchem jahr haben sie bei telinvest gearbeitet", "in welchem jahr haben sie bei payten gearbeitet",
+    "in welchem jahr haben sie bei ataco gearbeitet", "ataco", "in welchem jahr haben sie bei capital markt solutions gearbeitet",
+    "CMS", "payten", "logosoft", "in welchem jahr haben sie bei foreo gearbeitet", "in welchem jahr haben sie bei logosoft gearbeitet",
+    "logosoft", "in welchem jahr haben sie bei capital market solutions gearbeitet", "CMS", "foreo", "arbeitserfahrung",
+    "was sind deine zukunftspläne", "pläne", "arbeiten", "im augenblick", "wo hast du gearbeitet", "wie kann ich dich kontaktieren",
+    "kontakt", "wie heißt du", "name", "Wie geht es dir?", "Was geht?", "was machst du gerade?", "wo sie derzeit arbeiten"
+]
+english_keywords = [
+    "where have you worked", "See Contact", "2014", "Telinvest", "what year did you work at BH Telecom", "telecom",
+    "2015", "what year did you work at telinvest", "what year did you work at Ataco", "ataco", "what year did you work at payten",
+    "payten", "what year did you work at foreo", "what year did you work at Logosoft", "what year did you work at capital market solutions",
+    "logosoft", "foreo", "capital market solutions", "CMS", "right now", "what are your future plans", "plans",
+    "where did you work", "how can i contact you", "contact", "what is your name", "name", "How are you?", "What's up?", "What are you doing?",
+    "where are you currently working"
+]
 
 def detect_language(content):
     # Proverava jezik na osnovu ključnih reči
@@ -67,8 +93,6 @@ def generate_response(messages):
     return "Sorry, I don't understand your request."
 
 # Example Streamlit app
-import streamlit as st
-
 st.title("Chat Bot")
 st.write("Ask me anything about my work experience!")
 
