@@ -1,52 +1,36 @@
 import streamlit as st
 
 
-def generate_response(messages):
-    # Definiši ključne reči za različite jezike
-    bosnian_keywords = [
-        "radno iskustvo", "See Contact", "2014", "koje godine si radio u BH Telecom", "telecom", "Telinvest",
-        "koje godine si radio u Telinvest", "2015", "koje godine si radio u logosoftu", "koje godine si radio u ataco",
-        "ataco", "logosoft", "koje godine si radio u foreo", "koje godine si radio u logosoftu", "logosoft", "payten",
-        "koje godine si radio u capital market solutions", "koje godine si radio u payten", "CMS", "foreo", "poslovi",
-        "koji su tvoji budući planovi", "planovi", "gdje si radio", "radio", "sada", "kako da te kontaktiram", "kontakt",
-        "kako se zoves", "ime", "Kako si?", "kako si ti?", "šta ima?", "šta radiš?", "gdje trenutno radiš"
-    ]
-    german_keywords = [
-        "arbeitsplätze", "See Contact", "2014", "in welchem jahr haben sie bei BH Telecom gearbeitet", "telecom",
-        "Telinvest", "in welchem jahr haben sie bei telinvest gearbeitet", "in welchem jahr haben sie bei payten gearbeitet",
-        "in welchem jahr haben sie bei ataco gearbeitet", "ataco", "in welchem jahr haben sie bei capital markt solutions gearbeitet",
-        "CMS", "payten", "logosoft", "in welchem jahr haben sie bei foreo gearbeitet", "in welchem jahr haben sie bei logosoft gearbeitet",
-        "logosoft", "in welchem jahr haben sie bei capital market solutions gearbeitet", "CMS", "foreo", "arbeitserfahrung",
-        "was sind deine zukunftspläne", "pläne", "arbeiten", "im augenblick", "wo hast du gearbeitet", "wie kann ich dich kontaktieren",
-        "kontakt", "wie heißt du", "name", "Wie geht es dir?", "Was geht?", "was machst du gerade?", "wo sie derzeit arbeiten"
-    ]
-    english_keywords = [
-        "where have you worked", "See Contact", "2014", "Telinvest", "what year did you work at BH Telecom", "telecom",
-        "2015", "what year did you work at telinvest", "what year did you work at Ataco", "ataco", "what year did you work at payten",
-        "payten", "what year did you work at foreo", "what year did you work at Logosoft", "what year did you work at capital market solutions",
-        "logosoft", "foreo", "capital market solutions", "CMS", "right now", "what are your future plans", "plans",
-        "where did you work", "how can i contact you", "contact", "what is your name", "name", "How are you?", "What's up?", "What are you doing?",
-        "where are you currently working"
-    ]
+def detect_language(content):
+    # Proverava jezik na osnovu ključnih reči
+    if any(keyword in content for keyword in bosnian_keywords):
+        return "bosnian"
+    elif any(keyword in content for keyword in german_keywords):
+        return "german"
+    elif any(keyword in content for keyword in english_keywords):
+        return "english"
+    else:
+        return "unknown"
 
-    # Prolazi kroz sve poruke
+def generate_response(messages):
     for msg in messages:
         content = msg["content"].lower()
+        language = detect_language(content)
 
         # Ako se pitanje odnosi na ime na bilo kojem jeziku
-        if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["kako se zoves", "ime"]):
+        if language == "bosnian" and any(keyword in content for keyword in ["kako se zoves", "ime"]):
             return "Moje ime je Amar Helac"
-        if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["wie heißt du", "name"]):
+        elif language == "german" and any(keyword in content for keyword in ["wie heißt du", "name"]):
             return "Mein Name ist Amar Helac"
-        if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what is your name", "name"]):
+        elif language == "english" and any(keyword in content for keyword in ["what is your name", "name"]):
             return "My name is Amar Helac"
 
         # Ako se pitanje odnosi na buduće planove
-        if any(keyword in content for keyword in bosnian_keywords) and any(keyword in content for keyword in ["koji su tvoji budući planovi", "planovi", "cilj"]):
+        if language == "bosnian" and any(keyword in content for keyword in ["koji su tvoji budući planovi", "planovi", "cilj"]):
             return "Imam veliki interes da se bavim konkretnije Devops dijelom te svi moji planovi vode ka tom cilju"
-        if any(keyword in content for keyword in german_keywords) and any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
+        elif language == "german" and any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
             return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
-        if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what are your future plans", "plans", "goal"]):
+        elif language == "english" and any(keyword in content for keyword in ["what are your future plans", "plans", "goal"]):
             return "I have a great interest in dealing more specifically with the Devops part, and all my plans lead to that goal"
 
         # Ako se pitanje odnosi na određeno radno mesto
@@ -73,16 +57,18 @@ def generate_response(messages):
 
         for position, (bosnian_response, german_response, english_response) in job_positions.items():
             if position in content:
-                if any(keyword in content for keyword in bosnian_keywords):
+                if language == "bosnian":
                     return bosnian_response
-                elif any(keyword in content for keyword in german_keywords):
+                elif language == "german":
                     return german_response
-                elif any(keyword in content for keyword in english_keywords):
+                elif language == "english":
                     return english_response
 
     return "Sorry, I don't understand your request."
 
 # Example Streamlit app
+import streamlit as st
+
 st.title("Chat Bot")
 st.write("Ask me anything about my work experience!")
 
