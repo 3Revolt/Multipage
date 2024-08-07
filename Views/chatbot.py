@@ -3,7 +3,8 @@ import streamlit as st
 
 st.title("ChatGPT-like Clone")
 
-openai.api_key = st.secrets["OPEN_API_KEY"]
+
+openai.api_key = st.secrets["openai"]["OPEN_API_KEY"]
 
 
 # Set a default model
