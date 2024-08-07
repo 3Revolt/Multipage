@@ -120,7 +120,7 @@ def generate_response(messages):
             return "Ich habe im Zeitraum von 01/2015 bis 07/2015 bei See Contact gearbeitet, wo ich die Position des technischen Supports für Privatanwender innehatte. Informationen zu dieser Position finden Sie auf der Seite Über mich."
         if any(keyword in content for keyword in english_keywords) and any(keyword in content for keyword in ["what year did you work at See Contact","2014", "See Contact"]):
             return "I worked at See Contact in the period from 01/2015 to 07/2015 where I was in the position of Technical Support for Residential users, you can find about the said position on the about me page."
- return "Sorry, I didn't understand your question."
+        return "Sorry, I didn't understand your question."
 
 # Streamlit aplikacija
 st.title("Chat Bot")
