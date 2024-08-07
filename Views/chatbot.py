@@ -8,12 +8,13 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 
 def generate_response(messages):
     user_input = " ".join([msg["content"] for msg in messages])
+    print(f"User input: {user_input}")  # Debugging line
 
     # Tokenizacija i generisanje odgovora
     inputs = tokenizer(user_input, return_tensors="pt")
     outputs = model.generate(inputs["input_ids"], max_length=150, num_return_sequences=1)
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-
+    print(f"Generated response: {response}")  # Debugging line
     # Provjera na poznate ključne riječi
     bosnian_keywords = [
         "radno iskustvo", "gdje si radio", "See Contact", "2014", "koje godine si radio u BH Telecom",
