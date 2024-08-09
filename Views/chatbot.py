@@ -3,7 +3,7 @@ import streamlit as st
 
 # Retrieve Hugging Face API key from secrets.toml
 hf_api_key = st.secrets["huggingface"]["api_key"]
-hf_endpoint = "https://api-inference.huggingface.co/models/YOUR_MODEL_NAME"
+hf_endpoint = "https://api-inference.huggingface.co/models/distilgpt2"  # Replace with your actual model
 
 def get_hf_response(messages):
     headers = {
@@ -51,27 +51,27 @@ def get_hf_response(messages):
 
 st.title("Chatbot")
 
-# Inicijalizacija chat istorije
+# Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Prikaz chat poruka iz istorije na ponovno učitavanje aplikacije
+# Display chat history on app reload
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Prihvati korisnički unos
+# Accept user input
 if prompt := st.chat_input("What is up?"):
-    # Dodaj korisničku poruku u istoriju chat-a
+    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    # Prikaz korisničke poruke u chat message kontejneru
+    # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Prikaz odgovora asistenta u chat message kontejneru
+    # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        # Pripremi sve poruke za API poziv
+        # Prepare all messages for API call
         response = get_hf_response(st.session_state.messages)
-        st.markdown(response)  # Prikaz konačnog odgovora
-        # Dodaj odgovor asistenta u istoriju chat-a
+        st.markdown(response)  # Display final response
+        # Add assistant's response to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
