@@ -3,12 +3,23 @@ from transformers import pipeline
 
 # Initialize the text generation pipeline
 model_name = "TheBloke/Llama-2-70B-Chat-GPTQ"
-pipe = pipeline("text-generation", model=model_name)
+
+try:
+    pipe = pipeline("text-generation", model=model_name)
+except Exception as e:
+    st.error(f"Error initializing pipeline: {e}")
+    pipe = None
 
 def generate_text(prompt):
-    # Generate text using the pipeline
-    outputs = pipe(prompt, max_length=150, top_p=0.95, temperature=0.9)
-    return outputs[0]['generated_text'].strip()
+    if pipe is None:
+        return "Pipeline is not initialized properly."
+
+    try:
+        outputs = pipe(prompt, max_length=150, top_p=0.95, temperature=0.9)
+        return outputs[0]['generated_text'].strip()
+    except Exception as e:
+        st.error(f"Error generating text: {e}")
+        return "An error occurred while generating text."
 
 st.title("Chatbot")
 
