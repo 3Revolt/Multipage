@@ -1,53 +1,15 @@
-import requests
 import streamlit as st
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# Retrieve Hugging Face API key from secrets.toml
-hf_api_key = st.secrets["huggingface"]["api_key"]
-hf_endpoint = "https://api-inference.huggingface.co/models/distilgpt2"  # Replace with your actual model
+# Load tokenizer and model
+model_name = "TheBloke/Llama-2-70B-Chat-GPTQ"  # Use your specific model name here
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
 
-def get_hf_response(messages):
-    headers = {
-        "Authorization": f"Bearer {hf_api_key}",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "inputs": {
-            "past_user_inputs": [msg["content"] for msg in messages if msg["role"] == "user"],
-            "generated_responses": [msg["content"] for msg in messages if msg["role"] == "assistant"],
-            "text": messages[-1]["content"]
-        },
-        "parameters": {
-            "max_length": 150,
-            "top_p": 0.95,
-            "temperature": 0.9
-        }
-    }
-    try:
-        response = requests.post(hf_endpoint, headers=headers, json=data)
-        response.raise_for_status()
-        response_data = response.json()
-        if 'generated_text' in response_data:
-            return response_data['generated_text'].strip()
-        else:
-            st.error("Unexpected response format.")
-            return "Unexpected response format."
-    except requests.exceptions.HTTPError as e:
-        st.error(f"HTTP error occurred while contacting Hugging Face API: {e.response.status_code} - {e.response.text}")
-        print(f"HTTPError: {e.response.status_code} - {e.response.text}")
-        return "An error occurred while contacting the Hugging Face API."
-    except requests.exceptions.RequestException as e:
-        st.error(f"RequestException: {e}")
-        print(f"RequestException: {e}")
-        return "An unexpected error occurred."
-    except ValueError as e:
-        st.error(f"ValueError: {e}")
-        print(f"ValueError: {e}")
-        return "Failed to parse response JSON."
-    except Exception as e:
-        st.error(f"An unexpected error occurred: {e}")
-        print(f"Error: {e}")
-        return "An unexpected error occurred."
-    return None
+def generate_text(prompt):
+    inputs = tokenizer(prompt, return_tensors="pt")  # Tokenize the prompt
+    outputs = model.generate(inputs['input_ids'], max_length=150, top_p=0.95, temperature=0.9)  # Generate text
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)  # Decode the output
 
 st.title("Chatbot")
 
@@ -70,8 +32,9 @@ if prompt := st.chat_input("What is up?"):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        # Prepare all messages for API call
-        response = get_hf_response(st.session_state.messages)
+        # Prepare the prompt for the model
+        # Use only the latest user message for a more direct response
+        response = generate_text(prompt)
         st.markdown(response)  # Display final response
         # Add assistant's response to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
