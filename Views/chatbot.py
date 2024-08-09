@@ -30,7 +30,7 @@ def get_gemini_response(messages):
             return "Unexpected response format."
     except requests.exceptions.HTTPError as e:
         st.error("HTTP error occurred while contacting Gemini API.")
-        print(f"HTTPError: {e}")
+        print(f"HTTPError: {e.response.status_code} - {e.response.text}")
         return "An error occurred while contacting the Gemini API."
     except requests.exceptions.RequestException as e:
         st.error("An error occurred while sending the request.")
