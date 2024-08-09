@@ -32,19 +32,19 @@ def get_hf_response(messages):
             st.error("Unexpected response format.")
             return "Unexpected response format."
     except requests.exceptions.HTTPError as e:
-        st.error("HTTP error occurred while contacting Hugging Face API.")
+        st.error(f"HTTP error occurred while contacting Hugging Face API: {e.response.status_code} - {e.response.text}")
         print(f"HTTPError: {e.response.status_code} - {e.response.text}")
         return "An error occurred while contacting the Hugging Face API."
     except requests.exceptions.RequestException as e:
-        st.error("An error occurred while sending the request.")
+        st.error(f"RequestException: {e}")
         print(f"RequestException: {e}")
         return "An unexpected error occurred."
     except ValueError as e:
-        st.error("Failed to parse response JSON.")
+        st.error(f"ValueError: {e}")
         print(f"ValueError: {e}")
         return "Failed to parse response JSON."
     except Exception as e:
-        st.error("An unexpected error occurred.")
+        st.error(f"An unexpected error occurred: {e}")
         print(f"Error: {e}")
         return "An unexpected error occurred."
     return None
