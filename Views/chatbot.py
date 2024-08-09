@@ -1,14 +1,26 @@
 import streamlit as st
-from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
 
-# Initialize the pipeline with the specific model
+# Load the model and tokenizer directly
 model_name = "TheBloke/Llama-2-70B-Chat-GPTQ"
-pipe = pipeline("text-generation", model=model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+# Ensure the model is in evaluation mode
+model.eval()
 
 def generate_text(prompt):
-    # Generate text using the pipeline
-    results = pipe(prompt, max_length=150, top_p=0.95, temperature=0.9)
-    return results[0]['generated_text'].strip()
+    # Encode the prompt and generate text
+    inputs = tokenizer(prompt, return_tensors="pt")
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_length=150,
+            top_p=0.95,
+            temperature=0.9
+        )
+    return tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
 
 st.title("Chatbot")
 
@@ -31,7 +43,7 @@ if prompt := st.chat_input("What is up?"):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        # Generate the response using the pipeline
+        # Generate the response using the model
         response = generate_text(prompt)
         st.markdown(response)  # Display final response
         # Add assistant's response to chat history
