@@ -1,25 +1,14 @@
 import streamlit as st
 from transformers import pipeline
 
-# Initialize the text generation pipeline
+# Initialize the pipeline with the specific model
 model_name = "TheBloke/Llama-2-70B-Chat-GPTQ"
-
-try:
-    pipe = pipeline("text-generation", model=model_name)
-except Exception as e:
-    st.error(f"Error initializing pipeline: {e}")
-    pipe = None
+pipe = pipeline("text-generation", model=model_name)
 
 def generate_text(prompt):
-    if pipe is None:
-        return "Pipeline is not initialized properly."
-
-    try:
-        outputs = pipe(prompt, max_length=150, top_p=0.95, temperature=0.9)
-        return outputs[0]['generated_text'].strip()
-    except Exception as e:
-        st.error(f"Error generating text: {e}")
-        return "An error occurred while generating text."
+    # Generate text using the pipeline
+    results = pipe(prompt, max_length=150, top_p=0.95, temperature=0.9)
+    return results[0]['generated_text'].strip()
 
 st.title("Chatbot")
 
