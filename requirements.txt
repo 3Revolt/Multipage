@@ -6,3 +6,4 @@ openai==0.28
 transformers==4.43.3
 torch==2.2.0
 optimum
+auto-gptq
