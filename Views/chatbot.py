@@ -65,4 +65,47 @@ def generate_response(messages):
         else:
             language = 'unknown'
         
-       
+        # Generiši odgovor na osnovu identifikovanog jezika
+        if language == 'bosnian':
+            if any(keyword in content for keyword in ["kako se zoves", "ime"]):
+                return "Moje ime je Amar Helac"
+            if any(keyword in content for keyword in ["koji su tvoji budući planovi", "planovi", "cilj"]):
+                return "Imam veliki interes da se bavim konkretnije Devops dijelom te svi moji planovi vode ka tom cilju"
+            for position, response in job_positions.items():
+                if position in content:
+                    return response[0]
+        
+        elif language == 'german':
+            if any(keyword in content for keyword in ["wie heißt du", "name"]):
+                return "Mein Name ist Amar Helac"
+            if any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
+                return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
+            for position, response in job_positions.items():
+                if position in content:
+                    return response[1]
+        
+        elif language == 'english':
+            if any(keyword in content for keyword in ["what is your name", "name"]):
+                return "My name is Amar Helac"
+            if any(keyword in content for keyword in ["what are your future plans", "plans", "goal"]):
+                return "I have a great interest in dealing more specifically with the Devops part, and all my plans lead to that goal"
+            for position, response in job_positions.items():
+                if position in content:
+                    return response[2]
+
+    return "Sorry, I don't understand your request."
+
+# Streamlit aplikacija
+st.title("Chatbot")
+
+# Polje za unos pitanja
+user_input = st.text_input("Unesite vaše pitanje:")
+
+# Dugme za slanje pitanja
+if st.button("Pošalji"):
+    if user_input:
+        # Pozovi funkciju za generisanje odgovora
+        response = generate_response([{"content": user_input}])
+        st.write("Odgovor: ", response)
+    else:
+        st.write("Molimo unesite pitanje.")
