@@ -11,14 +11,14 @@ def get_chatgpt_response(messages):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
-            max_tokens=150
+            max_tokens=50  # Smanjen broj tokena
         )
         print("Received response from OpenAI API.")
         return response.choices[0].message['content'].strip()
     except openai.error.RateLimitError as e:
         st.error("Rate limit exceeded. Please wait and try again.")
         print(f"RateLimitError: {e}")
-        time.sleep(20)  # Povećano kašnjenje pre nego što ponovo pokušate
+        time.sleep(30)  # Povećano kašnjenje pre nego što ponovo pokušate
         return "Rate limit exceeded. Please try again later."
     except openai.error.OpenAIError as e:
         st.error("An OpenAI error occurred.")
