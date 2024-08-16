@@ -1,59 +1,71 @@
-import openai
-import streamlit as st
-import time
+def generate_response(messages):
+    # Definiši ključne reči za različite jezike
+    bosnian_keywords = [
+        "radno iskustvo", "See Contact", "2014", "koje godine si radio u BH Telecom", "telecom", "Telinvest",
+        "koje godine si radio u Telinvest", "2015", "koje godine si radio u logosoftu", "koje godine si radio u ataco",
+        "ataco", "logosoft", "koje godine si radio u foreo", "koje godine si radio u logosoftu", "logosoft", "payten",
+        "koje godine si radio u capital market solutions", "koje godine si radio u payten", "CMS", "foreo", "poslovi",
+        "koji su tvoji budući planovi", "planovi", "gdje si radio", "radio", "sada", "kako da te kontaktiram", "kontakt",
+        "kako se zoves", "ime", "Kako si?", "kako si ti?", "šta ima?", "šta radiš?", "gdje trenutno radiš"
+    ]
+    german_keywords = [
+        "arbeitsplätze", "See Contact", "2014", "in welchem jahr haben sie bei BH Telecom gearbeitet", "telecom",
+        "Telinvest", "in welchem jahr haben sie bei telinvest gearbeitet", "in welchem jahr haben sie bei payten gearbeitet",
+        "in welchem jahr haben sie bei ataco gearbeitet", "ataco", "in welchem jahr haben sie bei capital markt solutions gearbeitet",
+        "CMS", "payten", "logosoft", "in welchem jahr haben sie bei foreo gearbeitet", "in welchem jahr haben sie bei logosoft gearbeitet",
+        "logosoft", "in welchem jahr haben sie bei capital market solutions gearbeitet", "CMS", "foreo", "arbeitserfahrung",
+        "was sind deine zukunftspläne", "pläne", "arbeiten", "im augenblick", "wo hast du gearbeitet", "wie kann ich dich kontaktieren",
+        "kontakt", "wie heißt du", "name", "Wie geht es dir?", "Was geht?", "was machst du gerade?", "wo sie derzeit arbeiten"
+    ]
+    english_keywords = [
+        "where have you worked", "See Contact", "2014", "Telinvest", "what year did you work at BH Telecom", "telecom",
+        "2015", "what year did you work at telinvest", "what year did you work at Ataco", "ataco", "what year did you work at payten",
+        "payten", "what year did you work at foreo", "what year did you work at Logosoft", "what year did you work at capital market solutions",
+        "logosoft", "foreo", "capital market solutions", "CMS", "right now", "what are your future plans", "plans",
+        "where did you work", "how can i contact you", "contact", "what is your name", "name", "How are you?", "What's up?", "What are you doing?",
+        "where are you currently working"
+    ]
 
-# Postavi OpenAI API ključ
-openai.api_key = st.secrets["openai"]["OPEN_API_KEY"]
+    # Prolazi kroz sve poruke
+    for msg in messages:
+        content = msg["content"].lower()
+        
+        # Identifikuj jezik pitanja
+        if any(keyword in content for keyword in bosnian_keywords):
+            language = 'bosnian'
+        elif any(keyword in content for keyword in german_keywords):
+            language = 'german'
+        elif any(keyword in content for keyword in english_keywords):
+            language = 'english'
+        else:
+            language = 'unknown'
+        
+        # Generiši odgovor na osnovu identifikovanog jezika
+        if language == 'bosnian':
+            if any(keyword in content for keyword in ["kako se zoves", "ime"]):
+                return "Moje ime je Amar Helac"
+            if any(keyword in content for keyword in ["koji su tvoji budući planovi", "planovi", "cilj"]):
+                return "Imam veliki interes da se bavim konkretnije Devops dijelom te svi moji planovi vode ka tom cilju"
+            for position, response in job_positions.items():
+                if position in content:
+                    return response[0]
+        
+        elif language == 'german':
+            if any(keyword in content for keyword in ["wie heißt du", "name"]):
+                return "Mein Name ist Amar Helac"
+            if any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
+                return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
+            for position, response in job_positions.items():
+                if position in content:
+                    return response[1]
+        
+        elif language == 'english':
+            if any(keyword in content for keyword in ["what is your name", "name"]):
+                return "My name is Amar Helac"
+            if any(keyword in content for keyword in ["what are your future plans", "plans", "goal"]):
+                return "I have a great interest in dealing more specifically with the Devops part, and all my plans lead to that goal"
+            for position, response in job_positions.items():
+                if position in content:
+                    return response[2]
 
-def get_chatgpt_response(messages):
-    print("Sending request to OpenAI API...")
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages,
-            max_tokens=50  # Smanjen broj tokena
-        )
-        print("Received response from OpenAI API.")
-        return response.choices[0].message['content'].strip()
-    except openai.error.RateLimitError as e:
-        st.error("Rate limit exceeded. Please wait and try again.")
-        print(f"RateLimitError: {e}")
-        time.sleep(30)  # Povećano kašnjenje pre nego što ponovo pokušate
-        return "Rate limit exceeded. Please try again later."
-    except openai.error.OpenAIError as e:
-        st.error("An OpenAI error occurred.")
-        print(f"OpenAIError: {e}")
-        return "An error occurred with the OpenAI API."
-    except Exception as e:
-        st.error("An error occurred while processing the request.")
-        print(f"Error: {e}")
-        return "An unexpected error occurred."
-    return None
-
-st.title("Chatbot")
-
-# Inicijalizacija chat istorije
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# Prikaz chat poruka iz istorije na ponovno učitavanje aplikacije
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# Prihvati korisnički unos
-if prompt := st.chat_input("What is up?"):
-    # Dodaj korisničku poruku u istoriju chat-a
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # Prikaz korisničke poruke u chat message kontejneru
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    # Prikaz odgovora asistenta u chat message kontejneru
-    with st.chat_message("assistant"):
-        # Pripremi sve poruke za API poziv
-        response = get_chatgpt_response(st.session_state.messages)
-        if response:
-            st.markdown(response)  # Prikaz konačnog odgovora
-            # Dodaj odgovor asistenta u istoriju chat-a
-            st.session_state.messages.append({"role": "assistant", "content": response})
+    return "Sorry, I don't understand your request."
