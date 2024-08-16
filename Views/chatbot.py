@@ -66,12 +66,13 @@ def generate_response(messages):
         st.write("German detected:", german_detected)
         st.write("English detected:", english_detected)
         
-        if bosnian_detected:
+        # Postavi prioritet jezika: English > Bosnian > German
+        if english_detected:
+            language = 'english'
+        elif bosnian_detected:
             language = 'bosnian'
         elif german_detected:
             language = 'german'
-        elif english_detected:
-            language = 'english'
         else:
             language = None
         
@@ -87,7 +88,7 @@ def generate_response(messages):
                     return response[0]
         
         elif language == 'german':
-            if any(keyword in content for keyword in ["wie heißt du"]):
+            if any(keyword in content for keyword in ["wie heißt du", "name"]):
                 return "Mein Name ist Amar Helac"
             if any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
                 return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
