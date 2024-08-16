@@ -44,7 +44,7 @@ def generate_response(messages):
                    "Ich habe im Zeitraum von 03/2019 bis 02/2020 bei Payten gearbeitet, wo ich die Position des technischen Supports für POS-Terminals und Geldautomatengeräte innehatte. Weitere Details zu dieser Position finden Sie auf der Seite Über mich.",
                    "I worked at Payten in the period from 03/2019 to 02/2020, where I held the position of Technical support for POS terminals and ATM devices. You can find more details about this position on the about me page"),
         "ataco": ("U kompaniji Ataco sam radio u periodu od 09/2017 do 03/2018 gdje sam bio na poziciji Dostavljača i komercijaliste. Detaljnije o navednoj poziciji možete pronaći na stranici about me",
-                  "Ich habe im Zeitraum von 09/2017 bis 03/2018 bei Ataco gearbeitet, wo ich die Position des Liefer- und Kaufmanns innehatte. Weitere Details zu dieser Position finden Sie auf der Seite Über mich.",
+                  "Ich habe im Zeitraum von 09/2017 bis 03/2018 bei Ataco gearbeitet, wo ich die Position des Liefer- und Kaufmanns innehatte. Weitere Details zu dieser Stelle finden Sie auf der Seite Über mich.",
                   "I worked at Ataco in the period from 09/2017 to 03/2018, where I was in the position of Delivery and Commercialist. You can find more details about this position on the about me page"),
         "telinvest": ("U kompaniji Telinvest sam radio u periodu od 07/2015 do 09/2017 gdje sam bio na poziciji tehničke podrške za business korisnike, o navednoj poziciji možete pronaći na stranici about me",
                       "Ich habe im Zeitraum von 07/2015 bis 09/2017 bei Telinvest gearbeitet, wo ich die Position des technischen Supports für Geschäftsanwender innehatte. Informationen zu dieser Position finden Sie auf der Seite Über mich.",
@@ -55,6 +55,8 @@ def generate_response(messages):
     for msg in messages:
         content = msg["content"].lower()
         
+        st.write("Content for debugging:", content)  # Debug ispis
+        
         # Identifikuj jezik pitanja
         if any(keyword in content for keyword in bosnian_keywords):
             language = 'bosnian'
@@ -64,6 +66,8 @@ def generate_response(messages):
             language = 'english'
         else:
             language = 'unknown'
+        
+        st.write("Detected language:", language)  # Debug ispis
         
         # Generiši odgovor na osnovu identifikovanog jezika
         if language == 'bosnian':
@@ -76,7 +80,7 @@ def generate_response(messages):
                     return response[0]
         
         elif language == 'german':
-            if any(keyword in content for keyword in ["wie heißt du", "du"]):
+            if any(keyword in content for keyword in ["wie heißt du", "name"]):
                 return "Mein Name ist Amar Helac"
             if any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
                 return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
