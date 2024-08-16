@@ -76,7 +76,7 @@ def generate_response(messages):
                     return response[0]
         
         elif language == 'german':
-            if any(keyword in content for keyword in ["wie heißt du", "name"]):
+            if any(keyword in content for keyword in ["wie heißt du", "du"]):
                 return "Mein Name ist Amar Helac"
             if any(keyword in content for keyword in ["was sind deine zukunftspläne", "pläne", "ziel"]):
                 return "Ich habe ein großes Interesse daran, mich konkreter mit dem Devops-Teil auseinanderzusetzen, und alle meine Pläne führen auf dieses Ziel hin"
