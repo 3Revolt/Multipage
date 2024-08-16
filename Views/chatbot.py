@@ -58,18 +58,25 @@ def generate_response(messages):
         st.write("Content for debugging:", content)  # Debug ispis
         
         # Identifikuj jezik pitanja
-        if any(keyword in content for keyword in bosnian_keywords):
+        bosnian_detected = any(keyword in content for keyword in bosnian_keywords)
+        german_detected = any(keyword in content for keyword in german_keywords)
+        english_detected = any(keyword in content for keyword in english_keywords)
+        
+        st.write("Bosnian detected:", bosnian_detected)
+        st.write("German detected:", german_detected)
+        st.write("English detected:", english_detected)
+        
+        if bosnian_detected:
             language = 'bosnian'
-        elif any(keyword in content for keyword in german_keywords):
+        elif german_detected:
             language = 'german'
-        elif any(keyword in content for keyword in english_keywords):
+        elif english_detected:
             language = 'english'
         else:
-            language = 'unknown'
+            language = None
         
         st.write("Detected language:", language)  # Debug ispis
-        
-        # Generiši odgovor na osnovu identifikovanog jezika
+
         if language == 'bosnian':
             if any(keyword in content for keyword in ["kako se zoves", "ime"]):
                 return "Moje ime je Amar Helac"
