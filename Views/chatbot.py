@@ -3,7 +3,7 @@ import streamlit as st
 import time
 
 # Postavi OpenAI API ključ
-openai.api_key = st.secrets["openai"]["api_key"]
+openai.api_key = st.secrets["openai"]["OPEN_API_KEY"]
 
 def get_chatgpt_response(messages):
     print("Sending request to OpenAI API...")
@@ -16,9 +16,9 @@ def get_chatgpt_response(messages):
         print("Received response from OpenAI API.")
         return response.choices[0].message['content'].strip()
     except openai.error.RateLimitError as e:
-        st.error("Rate limit exceeded. Please check your OpenAI plan and usage.")
+        st.error("Rate limit exceeded. Please wait and try again.")
         print(f"RateLimitError: {e}")
-        time.sleep(5)  # Dodajte kašnjenje pre nego što ponovo pokušate
+        time.sleep(10)  # Dodajte kašnjenje pre nego što ponovo pokušate
         return "Rate limit exceeded. Please try again later."
     except openai.error.OpenAIError as e:
         st.error("An OpenAI error occurred.")
@@ -53,6 +53,7 @@ if prompt := st.chat_input("What is up?"):
     with st.chat_message("assistant"):
         # Pripremi sve poruke za API poziv
         response = get_chatgpt_response(st.session_state.messages)
-        st.markdown(response)  # Prikaz konačnog odgovora
-        # Dodaj odgovor asistenta u istoriju chat-a
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        if response:
+            st.markdown(response)  # Prikaz konačnog odgovora
+            # Dodaj odgovor asistenta u istoriju chat-a
+            st.session_state.messages.append({"role": "assistant", "content": response})
