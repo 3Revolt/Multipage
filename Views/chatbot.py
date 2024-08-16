@@ -18,7 +18,7 @@ def get_chatgpt_response(messages):
     except openai.error.RateLimitError as e:
         st.error("Rate limit exceeded. Please wait and try again.")
         print(f"RateLimitError: {e}")
-        time.sleep(10)  # Dodajte kašnjenje pre nego što ponovo pokušate
+        time.sleep(20)  # Povećano kašnjenje pre nego što ponovo pokušate
         return "Rate limit exceeded. Please try again later."
     except openai.error.OpenAIError as e:
         st.error("An OpenAI error occurred.")
