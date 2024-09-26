@@ -7,7 +7,7 @@ def generate_response(messages):
         "radno iskustvo", "See Contact", "2014", "koje godine si radio u BH Telecom", "telecom", "Telinvest",
         "koje godine si radio u Telinvest", "2015", "koje godine si radio u logosoftu", "koje godine si radio u ataco",
         "ataco", "logosoft", "koje godine si radio u foreo", "koje godine si radio u logosoftu", "logosoft", "payten",
-        "koje godine si radio u capital market solutions", "koje godine si radio u payten", "CMS", "foreo", "poslovi",
+        "koje godine si radio u capital market solutions", "koje godine si radio u payten", "CMS",  "poslovi",
         "koji su tvoji budući planovi", "planovi", "gdje si radio", "radio", "sada", "kako da te kontaktiram", "kontakt",
         "kako se zoves", "ime", "Kako si?", "kako si ti?", "šta ima?", "šta radiš?", "gdje trenutno radiš"
     ]
