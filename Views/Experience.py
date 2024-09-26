@@ -39,6 +39,89 @@ def display_title():
 display_title()
 
 
+# --- Job 1 ---
+# --- EXAMPLE CONTENT ---
+putanja_do_logotipa = load_and_resize_image("fzzz.png")
+col1, col2 = st.columns([1, 3])
+col1.image(putanja_do_logotipa, use_column_width=True)
+col1.markdown("[Federalni zavod za zapošljavanje](https://fzzz.ba/)")
+
+if st.session_state["selected_language"] == "Bosanski":
+    col2.write("**Federalni zavod za zapošljavanje**")
+    col2.write("🚧 **Referent za tehničku podršku**")
+    col2.write("02/2024 - Present")
+    col2.write(
+        """
+        - ► Odgovornost za blagovremeno zakonito pravilno i kvalitetno obavljanje poslova
+        - ► Administracija baze podataka i informacijskih tehnologija
+        - ► Administracija korisnika u Active Directory-u
+        - ► Konfiguracija mrežne i sigurnosne opreme
+        - ► Implementiranje programskih rješenja za potrebe Zavoda
+        - ► Ažuriranje podataka i dokumenata na web portalu
+        - ► Nadgledanje ispravnosti radnih stanica(printera i ostalih multifunkcijskih uređaja)
+        - ► IT podrška korisnicima za rad u poslovnom sustavu uključujući nadogranje sustava ovisno o potrebama korisnika
+        - ► Pisanje dokumentacije i procedura IT sistema
+        - ► Pisanje skripti za automatizaciju
+        - ► Identificiranje zahtijeva korisnika i zaprimanje različitih upita kao i pružanje pomoći i otklanjanje kvarova
+        - ► Implementiranje sigurnosnih mjera na računarima
+        - ► Pripremanje i instalacija opreme u sali za održavanje sastanaka
+        - ► Druge aktivnosti u skladu sa zahtjevima nadležne osobe i zahtjevima radnog mjesta
+        - ► Dnevno kontroliranje internet konekcije u zavodu
+        - ► Obavljanje i drugih poslova po nalogu rukovoditelja jedinice
+        
+        """
+    )
+elif st.session_state["selected_language"] == "English":
+    col2.write("**Federal Employment Institute**")
+    col2.write("🚧 **Technical Support Officer**")
+    col2.write("02/2024 - Present")
+    col2.write(
+        """
+        - ► Responsibility for timely, lawful, proper, and quality performance of tasks
+        - ► Administration of database and information technologies
+        - ► Administration of users in Active Directory
+        - ► Configuration of network and security equipment
+        - ► Implementation of software solutions for the needs of the Institute
+        - ► Updating data and documents on the web portal
+        - ► Monitoring the functionality of workstations (printers and other multifunction devices)
+        - ► IT support for users working within the business system, including system upgrades based on user needs
+        - ► Writing documentation and procedures for the IT system
+        - ► Writing scripts for automation
+        - ► Identifying user requirements, receiving various inquiries, providing assistance, and troubleshooting
+        - ► Implementing security measures on computer
+        - ► Preparing and installing equipment in the meeting room
+        - ► Other activities in accordance with the requirements of the supervisor and the job position
+        - ► Daily monitoring of the internet connection at the Institute
+        - ► Performing other tasks as directed by the unit manager
+        """
+    )
+elif st.session_state["selected_language"] == "Deutsch":
+    col2.write("**Bundesagentur für Arbeit**")
+    col2.write("🚧 **Mitarbeiter für Technischen Support**")
+    col2.write("02/2024 - Present")
+    col2.write(
+        """
+        - ► Verantwortung für die rechtzeitige, gesetzmäßige, ordnungsgemäße und qualitativ hochwertige Erledigung der Aufgaben
+        - ► Verwaltung von Datenbanken und Informationstechnologien
+        - ► Benutzerverwaltung im Active Directory
+        - ► Konfiguration von Netzwerk- und Sicherheitsgeräten
+        - ► Implementierung von Softwarelösungen für die Bedürfnisse des Instituts
+        - ► Aktualisierung von Daten und Dokumenten auf dem Webporta
+        - ► Überwachung der Funktionsfähigkeit von Arbeitsstationen (Druckern und anderen Multifunktionsgeräten)
+        - ► IT-Support für Benutzer im Geschäftssystem, einschließlich System-Upgrades je nach Benutzeranforderungen
+        - ► Erstellung von Dokumentationen und Verfahren für das IT-System
+        - ► Schreiben von Skripten zur Automatisierung
+        - ► Identifizierung der Benutzeranforderungen, Entgegennahme verschiedener Anfragen, Bereitstellung von Unterstützung und Fehlerbehebung
+        - ► Implementierung von Sicherheitsmaßnahmen auf Computern
+        - ► Vorbereitung und Installation von Geräten im Besprechungsraum
+        - ► Weitere Aktivitäten gemäß den Anforderungen des Vorgesetzten und des Arbeitsplatzes
+        - ► Tägliche Überprüfung der Internetverbindung im Institut
+        - ► Ausführung weiterer Aufgaben auf Anweisung des Abteilungsleiters
+        """
+    )
+
+st.markdown("<br><br><br>", unsafe_allow_html=True)
+
 
 
 
@@ -51,7 +134,7 @@ col1.markdown("[F O R E O](http://www.foreo.com)")
 if st.session_state["selected_language"] == "Bosanski":
     col2.write("**F O R E O**")
     col2.write("🚧 **IT support specialist**")
-    col2.write("11/2021 - Present")
+    col2.write("11/2021 - 02/2024")
     col2.write(
         """
         - ► Odgovornost za osnovnu podršku korisnicima
