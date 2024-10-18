@@ -11,7 +11,7 @@ body, html {
 }
 
 body {
-    background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20230524/pngtree-d-animated-3d-model-of-robot-with-blue-and-green-eyes-image_2602870.jpg");
+    background-image: url("https://t3.ftcdn.net/jpg/07/66/87/68/360_F_766876856_XDPvm1sg90Ar5Hwf1jRRIHM4FNCXmhKj.jpg");
     background-size: cover;  
     background-position: center;
     background-repeat: no-repeat;
