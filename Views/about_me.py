@@ -5,18 +5,17 @@ from email.mime.text import MIMEText
 import re
 
 # --- BACKGROUND IMAGE ---
-page_bg_img = '''
+page_bg_img = f"""
 <style>
-.stApp {
-background-image: url("assets/fzzz.jpg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-}
+[data-testid="stAppViewContainer"] > .main {{
+    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg");  /* Podesite putanju do lokalne slike */
+    background-size: cover;  /* Promenjeno u 'cover' */
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-attachment: local;
+}}
 </style>
-'''
-
-# Inject the custom CSS into the Streamlit app
+"""
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Funkcija za provjeru ispravnosti email adrese
