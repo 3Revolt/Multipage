@@ -4,19 +4,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import re
 
-# --- BACKGROUND IMAGE ---
-page_bg_img = f"""
-<style>
-[data-testid="stAppViewContainer"] > .main {{
-    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg");  /* Podesite putanju do lokalne slike */
-    background-size: cover;  /* Promenjeno u 'cover' */
-    background-position: top left;
-    background-repeat: no-repeat;
-    background-attachment: local;
-}}
-</style>
-"""
-st.markdown(page_bg_img, unsafe_allow_html=True)
+# --- POSTAVI SLIKU KAO POZADINU ---
+st.image("assets/fzzz.jpg", use_column_width=True, clamp=True)
 
 # Funkcija za provjeru ispravnosti email adrese
 def is_valid_email(email):
