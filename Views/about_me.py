@@ -12,7 +12,7 @@ page_bg_img = f"""
     background-size: cover;  /* Promenjeno u 'cover' */
     background-position: top left;
     background-repeat: no-repeat;
-    background-attachment: local;
+    background-attachment: fixed;
 }}
 </style>
 """
