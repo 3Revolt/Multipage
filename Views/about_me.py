@@ -202,7 +202,7 @@ st.markdown(f'## {texts["select_page"]}')
 # --- HERO SECTION ---
 col1, col2 = st.columns(2, gap="small", vertical_alignment="center")
 with col1:
-    st.markdown('<img src="assets/cv.gif" width="230" style="display: block; margin: auto;">', unsafe_allow_html=True)
+    st.image("assets/cv.gif", width=230)
 
 with col2:
     st.title(texts['title'], anchor=False)
