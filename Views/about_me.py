@@ -12,8 +12,8 @@ body {
     background-size: cover;  
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh; 
     margin: 0;
+    height: 100%;  /* Postavi visinu na 100% */
 }
 [data-testid="stAppViewContainer"] > .main {
     background-color: rgba(255, 255, 255, 0.8); /* Možeš prilagoditi boju i transparentnost */
