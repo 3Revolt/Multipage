@@ -4,8 +4,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import re
 
-# --- POSTAVI SLIKU KAO POZADINU ---
-st.image("assets/fzzz.jpg", use_column_width=True, clamp=True)
+# --- BACKGROUND IMAGE ---
+st.image("https://wallpapercave.com/wp/wp9016401.jpg", use_column_width=True, clamp=True)
+
 
 # Funkcija za provjeru ispravnosti email adrese
 def is_valid_email(email):
