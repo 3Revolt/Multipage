@@ -1,5 +1,34 @@
 import streamlit as st
 
+
+# --- BACKGROUND IMAGE ---
+page_bg_img = """
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-image: url("https://www.shutterstock.com/image-vector/3d-vector-robot-chatbot-ai-600nw-2301916351.jpg");
+    background-size: cover;  
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+[data-testid="stAppViewContainer"] > .main {
+    background-color: rgba(255, 255, 255, 0.8); /* Prilagodi boju i transparentnost */
+    box-shadow: none; /* Ukloni sjenu ako je primijenjena */
+    min-height: 100vh; /* Osiguraj da glavni sadržaj zauzima punu visinu */
+}
+</style>
+"""
+
+st.markdown(page_bg_img, unsafe_allow_html=True)
+
+
+
 # Definiši funkciju za generisanje odgovora
 def generate_response(messages):
     # Definiši ključne reči za različite jezike
