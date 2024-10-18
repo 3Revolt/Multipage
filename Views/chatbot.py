@@ -256,6 +256,14 @@ st.markdown(
         color: #d33682; /* Promijeni ovu boju po želji */
         font-size: 36px; /* Promijeni veličinu fonta po želji */
     }
+    
+    .input-field {
+        color: #fff; /* Boja teksta unutar input polja */
+        background-color: #586e75; /* Pozadinska boja input polja */
+        border: 1px solid #d33682; /* Boja ivice input polja */
+        padding: 10px; /* Unutrašnji razmak */
+        border-radius: 5px; /* Zaobljenje uglova */
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -265,7 +273,10 @@ st.markdown(
 st.markdown('<h1 class="chatbot-title">Chatbot</h1>', unsafe_allow_html=True)
 
 # Polje za unos pitanja
-user_input = st.text_input("Unesite vaše pitanje:")
+user_input = st.text_input("Unesite vaše pitanje:", key="input_field", help="Unesite pitanje ovdje.")
+
+# Stilizuj input polje
+st.markdown('<style>input {color: #fff; background-color: #586e75; border: 1px solid #d33682; padding: 10px; border-radius: 5px;}</style>', unsafe_allow_html=True)
 
 # Dugme za slanje pitanja
 if st.button("Pošalji"):
