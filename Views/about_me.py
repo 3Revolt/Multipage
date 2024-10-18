@@ -5,17 +5,23 @@ from email.mime.text import MIMEText
 import re
 
 # --- BACKGROUND IMAGE ---
-page_bg_img = f"""
+page_bg_img = """
 <style>
-[data-testid="stAppViewContainer"] > .main {{
-    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg");  /* Podesite putanju do lokalne slike */
-    background-size: cover;  /* Promenjeno u 'cover' */
-    background-position: top left;
+body {
+    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg"); 
+    background-size: cover;  
+    background-position: center;
     background-repeat: no-repeat;
-    background-attachment: local;
-}}
+    margin: 0;
+    height: 100%;
+}
+[data-testid="stAppViewContainer"] > .main {
+    background-color: rgba(255, 255, 255, 0.8); /* Prilagodi boju i transparentnost */
+    box-shadow: none; /* Ukloni sjenu ako je primijenjena */
+}
 </style>
 """
+
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Funkcija za provjeru ispravnosti email adrese
