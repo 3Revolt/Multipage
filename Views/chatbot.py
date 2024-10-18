@@ -248,8 +248,21 @@ def generate_response(messages):
         "Ich konnte keine relevanten Schlüsselwörter in den Nachrichten finden.Leider bin ich derzeit nicht auf ein weiterführendes Gespräch eingestellt, sondern nur auf meinen Lebenslauf bezogen.Versuche wie: In welchem ​​Jahr haben Sie bei Foreo gearbeitet?"  # Nemački
     )
 
-# Streamlit aplikacija
-st.title("Chatbot")
+# Postavi HTML i CSS za stilizaciju
+st.markdown(
+    """
+    <style>
+    .chatbot-title {
+        color: #d33682; /* Promijeni ovu boju po želji */
+        font-size: 36px; /* Promijeni veličinu fonta po želji */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Naslov sa primjenjenim stilom
+st.markdown('<h1 class="chatbot-title">Chatbot</h1>', unsafe_allow_html=True)
 
 # Polje za unos pitanja
 user_input = st.text_input("Unesite vaše pitanje:")
