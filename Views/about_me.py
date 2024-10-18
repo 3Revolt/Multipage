@@ -5,19 +5,15 @@ from email.mime.text import MIMEText
 import re
 
 # --- BACKGROUND IMAGE ---
-page_bg_img = """
+page_bg_img = f"""
 <style>
-body {
-    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg"); 
-    background-size: cover;  
-    background-position: center;
+[data-testid="stAppViewContainer"] > .main {{
+    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg");  /* Podesite putanju do lokalne slike */
+    background-size: cover;  /* Promenjeno u 'cover' */
+    background-position: top left;
     background-repeat: no-repeat;
-    margin: 0;
-    height: 100%;  /* Postavi visinu na 100% */
-}
-[data-testid="stAppViewContainer"] > .main {
-    background-color: rgba(255, 255, 255, 0.8); /* Možeš prilagoditi boju i transparentnost */
-}
+    background-attachment: local;
+}}
 </style>
 """
 st.markdown(page_bg_img, unsafe_allow_html=True)
