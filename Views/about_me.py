@@ -8,11 +8,11 @@ import re
 page_bg_img = f"""
 <style>
 [data-testid="stAppViewContainer"] > .main {{
-    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg");  /* Podesite putanju do lokalne slike */
+    background-image: url("assets/fzzz.jpg");
     background-size: cover;  /* Promenjeno u 'cover' */
     background-position: top left;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: local;
 }}
 </style>
 """
