@@ -11,7 +11,7 @@ body, html {
 }
 
 body {
-    background-image: url("https://t3.ftcdn.net/jpg/07/66/87/68/360_F_766876856_XDPvm1sg90Ar5Hwf1jRRIHM4FNCXmhKj.jpg");
+    background-image: url("https://cdn.prod.website-files.com/624629e0591bdc3b300cb644/6594382bbafcb2ef0818295f_VA-HUb%202.png");
     background-size: cover;  
     background-position: center;
     background-repeat: no-repeat;
