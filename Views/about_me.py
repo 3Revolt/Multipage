@@ -202,8 +202,20 @@ st.markdown(f'## {texts["select_page"]}')
 # --- HERO SECTION ---
 col1, col2 = st.columns(2, gap="small", vertical_alignment="center")
 with col1:
-    # Zamijeni sliku s GIF-om
-    st.image("assets/cv.gif", width=230)  # GIF će se prikazivati u pokretu
+    # Koristi CSS za osiguranje da se GIF prikazuje animirano
+    st.markdown(
+        """
+        <style>
+        .animated-gif {
+            display: block;
+            width: 230px;
+            height: auto;  /* Određuje visinu automatski */
+        }
+        </style>
+        """, 
+        unsafe_allow_html=True
+    )
+    st.image("assets/cv.gif", width=230, caption="Opis GIF-a")  # GIF bi trebao biti animiran
 
 with col2:
     st.title(texts['title'], anchor=False)
