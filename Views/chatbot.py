@@ -11,7 +11,7 @@ body, html {
 }
 
 body {
-    background-image: url("https://www.shutterstock.com/image-vector/3d-vector-robot-chatbot-ai-600nw-2301916351.jpg");
+    background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20230524/pngtree-d-animated-3d-model-of-robot-with-blue-and-green-eyes-image_2602870.jpg");
     background-size: cover;  
     background-position: center;
     background-repeat: no-repeat;
