@@ -7,13 +7,16 @@ import re
 # --- BACKGROUND IMAGE ---
 page_bg_img = """
 <style>
-[data-testid="stAppViewContainer"] > .main {
+body {
     background-image: url("https://wallpapercave.com/wp/wp9016401.jpg"); 
     background-size: cover;  
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    height: 100vh; /* Podesi visinu na 100% prozora */
+    height: 100vh; 
+    margin: 0;
+}
+[data-testid="stAppViewContainer"] > .main {
+    background-color: rgba(255, 255, 255, 0.8); /* Možeš prilagoditi boju i transparentnost */
 }
 </style>
 """
