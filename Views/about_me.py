@@ -5,8 +5,19 @@ from email.mime.text import MIMEText
 import re
 
 # --- BACKGROUND IMAGE ---
-st.image("https://wallpapercave.com/wp/wp9016401.jpg", use_column_width=True, clamp=True)
-
+page_bg_img = """
+<style>
+[data-testid="stAppViewContainer"] > .main {
+    background-image: url("https://wallpapercave.com/wp/wp9016401.jpg"); 
+    background-size: cover;  
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh; /* Podesi visinu na 100% prozora */
+}
+</style>
+"""
+st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Funkcija za provjeru ispravnosti email adrese
 def is_valid_email(email):
