@@ -55,7 +55,7 @@ display_title()
 # --- EXAMPLE CONTENT ---
 putanja_do_logotipa = load_and_resize_image("fzzz.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("[Federalni zavod za zapošljavanje](https://fzzz.ba/)")
 
 if st.session_state["selected_language"] == "Bosanski":
@@ -140,7 +140,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # --- EXAMPLE CONTENT ---
 putanja_do_logotipa = load_and_resize_image("foreo.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("[F O R E O](http://www.foreo.com)")
 
 if st.session_state["selected_language"] == "Bosanski":
@@ -208,7 +208,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # --- EXAMPLE CONTENT ---
 putanja_do_logotipa = load_and_resize_image("logosoft.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("[LOGOSOFT](https://www.logosoft.ba)")
 
 
@@ -270,7 +270,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # --- EXAMPLE CONTENT ---
 putanja_do_logotipa = load_and_resize_image("cms.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("CMS")
 
 if st.session_state["selected_language"] == "Bosanski":
@@ -322,7 +322,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # --- EXAMPLE CONTENT ---
 putanja_do_logotipa = load_and_resize_image("payten.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("[PAYTEN](https://www.payten.com/en/)")
 if st.session_state["selected_language"] == "Bosanski":
     col2.write("**PAYTEN**")
@@ -372,7 +372,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # Load and resize company logo for PAYTEN
 payten_logo = load_and_resize_image("ataco.png")
 col1, col2 = st.columns([1, 3])
-col1.image(payten_logo, use_column_width=True)
+col1.image(payten_logo, use_container_width=True)
 col1.markdown("[A T A C O](https://ataco-bih.com/)")
 
 # --- JOB 5 ---
@@ -421,7 +421,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # Load and resize company logo for ATACO
 ataco_logo = load_and_resize_image("telinvest.png")
 col1, col2 = st.columns([1, 3])
-col1.image(ataco_logo, use_column_width=True)
+col1.image(ataco_logo, use_container_width=True)
 col1.markdown("[TELINVEST](https://www.telinvest.ba/)")
 
 # --- JOB 6 ---
@@ -476,7 +476,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 # --- JOB 7 ---
 putanja_do_logotipa = load_and_resize_image("bhtelecom.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("[BH Telecom](https://www.bhtelecom.ba)")
 
 if st.session_state["selected_language"] == "Bosanski":
@@ -520,7 +520,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 
 putanja_do_logotipa = load_and_resize_image("see.png")
 col1, col2 = st.columns([1, 3])
-col1.image(putanja_do_logotipa, use_column_width=True)
+col1.image(putanja_do_logotipa, use_container_width=True)
 col1.markdown("SEE Contact")
 
 # --- JOB 8 ---
