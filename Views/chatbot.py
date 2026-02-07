@@ -38,9 +38,30 @@ body {
     margin: auto;
     margin-top: 50px;
 }
+
+/* Ciljamo specifično tekst unutar chat poruka */
+[data-testid="stChatMessageContent"] {
+    color: #000000 !important;
+}
+
+[data-testid="stChatMessageContent"] p,
+[data-testid="stChatMessageContent"] div,
+[data-testid="stChatMessageContent"] span,
+[data-testid="stChatMessageContent"] li {
+    color: #000000 !important;
+}
+
+/* Pozadina za chat balončiće */
 .stChatMessage {
-    background-color: rgba(255,255,255, 0.8);
-    border-radius: 10px;
+    background-color: rgba(240, 242, 246, 0.95) !important; /* Blago siva pozadina */
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+/* User input polje */
+.stChatInputContainer {
+    padding-bottom: 20px;
 }
 </style>
 """
