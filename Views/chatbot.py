@@ -175,11 +175,25 @@ CV_CONTEXT = {
 
 # --- HELPER FUNCTIONS ---
 
-def detect_language(text):
+def normalize_text(text):
+    """
+    Uklanja kvačice i pretvara tekst u mala slova radi lakšeg prepoznavanja.
+    npr. "Šta radiš?" -> "sta radis?"
+    """
     text = text.lower()
+    replacements = {
+        'č': 'c', 'ć': 'c', 'š': 's', 'đ': 'd', 'ž': 'z',
+        'Č': 'c', 'Ć': 'c', 'Š': 's', 'Đ': 'd', 'Ž': 'z'
+    }
+    for char, replacement in replacements.items():
+        text = text.replace(char, replacement)
+    return text
+
+def detect_language(text):
+    text = normalize_text(text)
     # Simple heuristic
     de_words = ["hallo", "wie", "arbeit", "jahr", "wann", "wo", "danke", "bitte", "lebenslauf", "sprache", "was", "ist", "dein"]
-    bs_words = ["zdravo", "kako", "posao", "rad", "godina", "gdje", "hvala", "molim", "iskustvo", "jezik", "šta", "koji", "tvoj"]
+    bs_words = ["zdravo", "kako", "posao", "rad", "godina", "gdje", "hvala", "molim", "iskustvo", "jezik", "sta", "koji", "tvoj", "zoves", "ime", "ko si"]
     
     score_de = sum(1 for w in de_words if w in text)
     score_bs = sum(1 for w in bs_words if w in text)
@@ -192,7 +206,7 @@ def detect_language(text):
     return "en"
 
 def get_job_info(query, lang):
-    query = query.lower()
+    query = normalize_text(query)
     best_match = None
     
     # Normalize query for company names
@@ -215,29 +229,30 @@ def get_job_info(query, lang):
     return None
 
 def generate_smart_response(prompt):
-    # 1. Detect Language
+    # 1. Normalize and Detect Language
+    prompt_norm = normalize_text(prompt)
     lang = detect_language(prompt)
-    prompt_lower = prompt.lower()
     
     # 2. Check for "Who are you" / "Name"
-    if any(x in prompt_lower for x in ["name", "who are you", "ime", "zoveš", "wer bist du", "heißt"]):
+    # Keywords: name, who, ime, zoves, wer, heiss
+    if any(x in prompt_norm for x in ["name", "who", "ime", "zoves", "zove", "wer", "heiss", "ko si", "predstavi"]):
         if lang == "bs": return f"Ja sam {CV_CONTEXT['personal']['name']}, {CV_CONTEXT['personal']['role']}."
         if lang == "de": return f"Ich bin {CV_CONTEXT['personal']['name']}, {CV_CONTEXT['personal']['role']}."
         return f"I am {CV_CONTEXT['personal']['name']}, {CV_CONTEXT['personal']['role']}."
 
     # 3. Check for "Contact" / "Email"
-    if any(x in prompt_lower for x in ["contact", "email", "mail", "kontakt", "reach"]):
+    if any(x in prompt_norm for x in ["contact", "email", "mail", "kontakt", "reach", "javi"]):
         email = CV_CONTEXT['personal']['email']
         if lang == "bs": return f"Možete me kontaktirati putem emaila: {email}."
         if lang == "de": return f"Sie können mich per E-Mail erreichen: {email}."
         return f"You can contact me via email: {email}."
 
     # 4. Check for Specific Job Queries
-    job_match = get_job_info(prompt_lower, lang)
+    job_match = get_job_info(prompt_norm, lang)
     if job_match:
         # Determine specific question type (When? What? Where?)
-        is_time = any(x in prompt_lower for x in ["when", "year", "period", "kada", "godin", "vrijeme", "wann", "jahr", "zeit"])
-        is_role = any(x in prompt_lower for x in ["what", "role", "position", "šta", "pozicija", "was", "tätigkeit"])
+        is_time = any(x in prompt_norm for x in ["when", "year", "period", "kada", "godin", "vrijeme", "wann", "jahr", "zeit"])
+        is_role = any(x in prompt_norm for x in ["what", "role", "position", "sta", "pozicija", "was", "tatigkeit", "radili", "radio"])
         
         company = job_match['company']
         period = job_match['period']
@@ -264,14 +279,14 @@ def generate_smart_response(prompt):
             return f"At **{company}** ({period}), I worked as a **{role}**. {desc}"
 
     # 5. Check for "Skills"
-    if any(x in prompt_lower for x in ["skill", "vještin", "znanj", "tech", "fähigkeit"]):
+    if any(x in prompt_norm for x in ["skill", "vjestin", "znanj", "tech", "fahigkeit", "znas"]):
         skills = ", ".join(CV_CONTEXT["skills"])
         if lang == "bs": return f"Moje tehničke vještine uključuju: {skills}."
         if lang == "de": return f"Meine Fähigkeiten umfassen: {skills}."
         return f"My technical skills include: {skills}."
 
     # 6. Current Job
-    if any(x in prompt_lower for x in ["current", "now", "today", "trenutno", "sada", "jetzt", "aktuell"]):
+    if any(x in prompt_norm for x in ["current", "now", "today", "trenutno", "sada", "jetzt", "aktuell"]):
         if lang == "bs": return f"Trenutno radim u: {CV_CONTEXT['jobs'][0]['company']}."
         if lang == "de": return f"Derzeit arbeite ich bei: {CV_CONTEXT['jobs'][0]['company']}."
         return f"I am currently working at: {CV_CONTEXT['jobs'][0]['company']}."
