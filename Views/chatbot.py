@@ -241,11 +241,13 @@ def generate_smart_response(prompt):
         return f"I am {CV_CONTEXT['personal']['name']}, {CV_CONTEXT['personal']['role']}."
 
     # 3. Check for "Contact" / "Email"
-    if any(x in prompt_norm for x in ["contact", "email", "mail", "kontakt", "reach", "javi"]):
+    if any(x in prompt_norm for x in ["contact", "email", "mail", "kontakt", "reach", "javi", "pisi"]):
         email = CV_CONTEXT['personal']['email']
-        if lang == "bs": return f"Možete me kontaktirati putem emaila: {email}."
-        if lang == "de": return f"Sie können mich per E-Mail erreichen: {email}."
-        return f"You can contact me via email: {email}."
+        if lang == "bs": 
+            return f"Možete me kontaktirati direktno putem emaila: **{email}**.\n\nTakođer, možete popuniti **[kontakt formu na stranici 'O meni'](About_Me#contact-me)**."
+        if lang == "de": 
+            return f"Sie können mich direkt per E-Mail erreichen: **{email}**.\n\nAlternativ können Sie das **[Kontaktformular auf der Seite 'Über mich'](About_Me#contact-me)** ausfüllen."
+        return f"You can contact me directly via email: **{email}**.\n\nAlternatively, you can fill out the **[contact form on the 'About Me' page](About_Me#contact-me)**."
 
     # 4. Check for Specific Job Queries
     job_match = get_job_info(prompt_norm, lang)
