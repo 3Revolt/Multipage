@@ -303,8 +303,8 @@ st.write("\n")
 st.subheader(texts['contact_me'], anchor="contact-me")
 
 # Inicijalizacija session state za praćenje stanja forme
-if 'contact_form' not in st.session_state:
-    st.session_state.contact_form = {
+if 'contact_form_state' not in st.session_state:
+    st.session_state.contact_form_state = {
         'name': '',
         'email': '',
         'message': '',
@@ -335,9 +335,9 @@ def show_contact_form():
     limit_reached = is_rate_limited(user_key)
 
     with st.form("contact_form"):
-        name = st.text_input(texts['your_name'], value=st.session_state.contact_form['name'])
-        email = st.text_input(texts['your_email'], value=st.session_state.contact_form['email'])
-        message = st.text_area(texts['your_message'], value=st.session_state.contact_form['message'])
+        name = st.text_input(texts['your_name'], value=st.session_state.contact_form_state['name'])
+        email = st.text_input(texts['your_email'], value=st.session_state.contact_form_state['email'])
+        message = st.text_area(texts['your_message'], value=st.session_state.contact_form_state['message'])
         
         # CAPTCHA DISPLAY
         captcha_text = f"{texts['captcha_label']} {st.session_state.captcha_num1} + {st.session_state.captcha_num2}?"
@@ -373,13 +373,13 @@ def show_contact_form():
         with st.spinner(texts['sending']):
             if send_email(name, email, message):
                 log_attempt(user_key) # Log successful attempt
-                st.session_state.contact_form['submitted'] = True
-                st.session_state.contact_form['success_message'] = texts['success_message']
+                st.session_state.contact_form_state['submitted'] = True
+                st.session_state.contact_form_state['success_message'] = texts['success_message']
                 
                 # Clear form and reset captcha
-                st.session_state.contact_form['name'] = ''
-                st.session_state.contact_form['email'] = ''
-                st.session_state.contact_form['message'] = ''
+                st.session_state.contact_form_state['name'] = ''
+                st.session_state.contact_form_state['email'] = ''
+                st.session_state.contact_form_state['message'] = ''
                 st.session_state.captcha_num1 = random.randint(1, 10)
                 st.session_state.captcha_num2 = random.randint(1, 10)
                 st.rerun()
@@ -387,11 +387,11 @@ def show_contact_form():
                 st.error(texts['error_message'])
     
     # If the message is successfully sent, display success message
-    if st.session_state.contact_form['submitted']:
-        st.success(st.session_state.contact_form['success_message'])
+    if st.session_state.contact_form_state['submitted']:
+        st.success(st.session_state.contact_form_state['success_message'])
         # Clear the success message
-        st.session_state.contact_form['submitted'] = False
-        st.session_state.contact_form['success_message'] = ''
+        st.session_state.contact_form_state['submitted'] = False
+        st.session_state.contact_form_state['success_message'] = ''
 
 # Prikaz forme
 show_contact_form()
