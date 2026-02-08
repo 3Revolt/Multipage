@@ -3,6 +3,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import re
+import time
+import random
 
 # --- BACKGROUND IMAGE ---
 page_bg_img = """
@@ -45,6 +47,51 @@ try:
     EMAIL_AVAILABLE = True
 except (KeyError, FileNotFoundError, Exception):
     EMAIL_AVAILABLE = False
+
+# --- SECURITY: RATE LIMITER ---
+@st.cache_resource
+def get_rate_limiter_storage():
+    """
+    Vraća rječnik koji se dijeli između svih sesija.
+    Format: { "korisnik_id": [timestamp1, timestamp2, ...] }
+    """
+    return {}
+
+def is_rate_limited(user_key, limit=5, period=86400):
+    """
+    Provjerava da li je korisnik prešao limit poruka.
+    limit: Maksimalan broj poruka (default 5).
+    period: Vremenski period u sekundama (default 24h = 86400s).
+    """
+    storage = get_rate_limiter_storage()
+    now = time.time()
+    
+    # Inicijalizacija ako korisnik ne postoji
+    if user_key not in storage:
+        storage[user_key] = []
+    
+    # Očisti stare zapise (starije od 'period')
+    storage[user_key] = [t for t in storage[user_key] if now - t < period]
+    
+    # Provjeri limit
+    if len(storage[user_key]) >= limit:
+        return True
+    
+    return False
+
+def log_attempt(user_key):
+    """Bilježi uspješno slanje poruke."""
+    storage = get_rate_limiter_storage()
+    if user_key not in storage:
+        storage[user_key] = []
+    storage[user_key].append(time.time())
+
+# --- SECURITY: CAPTCHA ---
+def generate_captcha():
+    if 'captcha_num1' not in st.session_state or 'captcha_solved' not in st.session_state:
+        st.session_state.captcha_num1 = random.randint(1, 10)
+        st.session_state.captcha_num2 = random.randint(1, 10)
+        st.session_state.captcha_solved = False
 
 # Funkcija za slanje emaila
 def send_email(name, email, message):
@@ -105,7 +152,10 @@ translations = {
         'sending': 'Sending your message...',
         'success_message': 'Message sent successfully!',
         'error_message': 'An error occurred while sending the message.',
-        'select_page': 'ABOUT ME'
+        'select_page': 'ABOUT ME',
+        'captcha_label': 'Security Check: What is',
+        'captcha_error': 'Incorrect calculation. Please try again.',
+        'rate_limit_error': 'You have reached the limit of 5 messages per day. Please try again later.'
     },
     'Bosanski': {
         'title': 'Amar Helać',
@@ -143,7 +193,10 @@ translations = {
         'sending': 'Šaljem vašu poruku🚀...',
         'success_message': 'Poruka je uspješno poslana!',
         'error_message': 'Došlo je do greške prilikom slanja poruke.',
-        'select_page': 'O MENI'
+        'select_page': 'O MENI',
+        'captcha_label': 'Sigurnosna provjera: Koliko je',
+        'captcha_error': 'Netračan rezultat. Molimo pokušajte ponovo.',
+        'rate_limit_error': 'Dostigli ste limit od 5 poruka dnevno. Molimo pokušajte kasnije.'
     },
     'Deutsch': {
         'title': 'Amar Helać',
@@ -180,7 +233,10 @@ translations = {
         'sending': 'Ihre Nachricht wird gesendet...',
         'success_message': 'Nachricht erfolgreich gesendet!',
         'error_message': 'Ein Fehler ist beim Senden der Nachricht aufgetreten.',
-        'select_page': 'ÜBER MICH'
+        'select_page': 'ÜBER MICH',
+        'captcha_label': 'Sicherheitsüberprüfung: Wie viel ist',
+        'captcha_error': 'Falsches Ergebnis. Bitte versuchen Sie es erneut.',
+        'rate_limit_error': 'Sie haben das Limit von 5 Nachrichten pro Tag erreicht. Bitte versuchen Sie es später erneut.'
     }
 }
 
@@ -252,9 +308,13 @@ if 'contact_form' not in st.session_state:
         'name': '',
         'email': '',
         'message': '',
+        'captcha_input': '',
         'submitted': False,
         'success_message': ''
     }
+
+# Generate new captcha if needed
+generate_captcha()
 
 # Funkcija za prikaz forme
 def show_contact_form():
@@ -262,34 +322,74 @@ def show_contact_form():
         st.info("Kontakt forma je trenutno onemogućena (nije podešen email server).")
         return
 
-    # Display the contact form
-    name = st.text_input(texts['your_name'], value=st.session_state.contact_form['name'])
-    email = st.text_input(texts['your_email'], value=st.session_state.contact_form['email'])
-    message = st.text_area(texts['your_message'], value=st.session_state.contact_form['message'])
-    submit_button = st.button(texts['send'])
+    # Identify user roughly (using session ID logic or simple fallback)
+    # In Streamlit Cloud, getting real IP is hard without components, so we use a session-based approach combined with global cache.
+    # This is a basic protection.
+    user_key = "user_session" # In a real deployment, we'd try to get X-Forwarded-For headers if possible.
+    # For better unique identification in simple Streamlit without headers:
+    if 'user_id' not in st.session_state:
+        st.session_state.user_id = str(random.getrandbits(128))
+    user_key = st.session_state.user_id
+
+    # Check Limit BEFORE showing form interactions (optional, or check on submit)
+    limit_reached = is_rate_limited(user_key)
+
+    with st.form("contact_form"):
+        name = st.text_input(texts['your_name'], value=st.session_state.contact_form['name'])
+        email = st.text_input(texts['your_email'], value=st.session_state.contact_form['email'])
+        message = st.text_area(texts['your_message'], value=st.session_state.contact_form['message'])
+        
+        # CAPTCHA DISPLAY
+        captcha_text = f"{texts['captcha_label']} {st.session_state.captcha_num1} + {st.session_state.captcha_num2}?"
+        captcha_response = st.number_input(captcha_text, min_value=0, max_value=100, step=1, key="captcha_input_field")
+        
+        submit_button = st.form_submit_button(texts['send'])
 
     if submit_button:
-        if name and email and message:
-            if not is_valid_email(email):
-                st.error(texts['error_email'])
-            else:
-                with st.spinner(texts['sending']):
-                    if send_email(name, email, message):
-                        st.session_state.contact_form['submitted'] = True
-                        st.session_state.contact_form['success_message'] = texts['success_message']
-                        # Clear the form after successful submission
-                        st.session_state.contact_form['name'] = ''
-                        st.session_state.contact_form['email'] = ''
-                        st.session_state.contact_form['message'] = ''
-                    else:
-                        st.error(texts['error_message'])
-        else:
+        # 1. Validation
+        if not (name and email and message):
             st.error(texts['error_fields'])
+            return
+
+        if not is_valid_email(email):
+            st.error(texts['error_email'])
+            return
+
+        # 2. CAPTCHA Check
+        correct_sum = st.session_state.captcha_num1 + st.session_state.captcha_num2
+        if captcha_response != correct_sum:
+            st.error(texts['captcha_error'])
+            # Regenerate captcha on fail to prevent brute force
+            st.session_state.captcha_num1 = random.randint(1, 10)
+            st.session_state.captcha_num2 = random.randint(1, 10)
+            return
+
+        # 3. Rate Limit Check
+        if is_rate_limited(user_key):
+            st.error(texts['rate_limit_error'])
+            return
+
+        # 4. Send Email
+        with st.spinner(texts['sending']):
+            if send_email(name, email, message):
+                log_attempt(user_key) # Log successful attempt
+                st.session_state.contact_form['submitted'] = True
+                st.session_state.contact_form['success_message'] = texts['success_message']
+                
+                # Clear form and reset captcha
+                st.session_state.contact_form['name'] = ''
+                st.session_state.contact_form['email'] = ''
+                st.session_state.contact_form['message'] = ''
+                st.session_state.captcha_num1 = random.randint(1, 10)
+                st.session_state.captcha_num2 = random.randint(1, 10)
+                st.rerun()
+            else:
+                st.error(texts['error_message'])
     
     # If the message is successfully sent, display success message
     if st.session_state.contact_form['submitted']:
         st.success(st.session_state.contact_form['success_message'])
-        # Clear the success message and form fields
+        # Clear the success message
         st.session_state.contact_form['submitted'] = False
         st.session_state.contact_form['success_message'] = ''
 
