@@ -87,11 +87,15 @@ def log_attempt(user_key):
     storage[user_key].append(time.time())
 
 # --- SECURITY: CAPTCHA ---
-def generate_captcha():
-    if 'captcha_num1' not in st.session_state or 'captcha_solved' not in st.session_state:
+def init_captcha():
+    if 'captcha_num1' not in st.session_state:
         st.session_state.captcha_num1 = random.randint(1, 10)
+    if 'captcha_num2' not in st.session_state:
         st.session_state.captcha_num2 = random.randint(1, 10)
-        st.session_state.captcha_solved = False
+
+def reset_captcha():
+    st.session_state.captcha_num1 = random.randint(1, 10)
+    st.session_state.captcha_num2 = random.randint(1, 10)
 
 # Funkcija za slanje emaila
 def send_email(name, email, message):
@@ -302,19 +306,14 @@ st.write('\n'.join(texts['jezici']))
 st.write("\n")
 st.subheader(texts['contact_me'], anchor="contact-me")
 
-# Inicijalizacija session state za praćenje stanja forme
-if 'contact_form_state' not in st.session_state:
-    st.session_state.contact_form_state = {
-        'name': '',
-        'email': '',
-        'message': '',
-        'captcha_input': '',
-        'submitted': False,
-        'success_message': ''
-    }
+# Inicijalizacija ključeva za formu
+if 'contact_name' not in st.session_state: st.session_state.contact_name = ""
+if 'contact_email' not in st.session_state: st.session_state.contact_email = ""
+if 'contact_message' not in st.session_state: st.session_state.contact_message = ""
+if 'form_success' not in st.session_state: st.session_state.form_success = ""
 
-# Generate new captcha if needed
-generate_captcha()
+# Generate captcha
+init_captcha()
 
 # Funkcija za prikaz forme
 def show_contact_form():
@@ -322,25 +321,21 @@ def show_contact_form():
         st.info("Kontakt forma je trenutno onemogućena (nije podešen email server).")
         return
 
-    # Identify user roughly (using session ID logic or simple fallback)
-    # In Streamlit Cloud, getting real IP is hard without components, so we use a session-based approach combined with global cache.
-    # This is a basic protection.
-    user_key = "user_session" # In a real deployment, we'd try to get X-Forwarded-For headers if possible.
-    # For better unique identification in simple Streamlit without headers:
+    # Identify user
     if 'user_id' not in st.session_state:
         st.session_state.user_id = str(random.getrandbits(128))
     user_key = st.session_state.user_id
 
-    # Check Limit BEFORE showing form interactions (optional, or check on submit)
+    # Check Limit
     limit_reached = is_rate_limited(user_key)
 
     with st.form("contact_form"):
-        name = st.text_input(texts['your_name'], value=st.session_state.contact_form_state['name'])
-        email = st.text_input(texts['your_email'], value=st.session_state.contact_form_state['email'])
-        message = st.text_area(texts['your_message'], value=st.session_state.contact_form_state['message'])
+        # Koristimo 'key' parametar za direktno vezivanje na session_state
+        name = st.text_input(texts['your_name'], key="contact_name")
+        email = st.text_input(texts['your_email'], key="contact_email")
+        message = st.text_area(texts['your_message'], key="contact_message")
         
-        # CAPTCHA DISPLAY
-        # Uklonjen eksplicitni 'key' da se izbjegnu konflikti
+        # CAPTCHA
         captcha_text = f"{texts['captcha_label']} {st.session_state.captcha_num1} + {st.session_state.captcha_num2}?"
         captcha_response = st.number_input(captcha_text, min_value=0, max_value=100, step=1)
         
@@ -360,9 +355,7 @@ def show_contact_form():
         correct_sum = st.session_state.captcha_num1 + st.session_state.captcha_num2
         if captcha_response != correct_sum:
             st.error(texts['captcha_error'])
-            # Regenerate captcha on fail to prevent brute force
-            st.session_state.captcha_num1 = random.randint(1, 10)
-            st.session_state.captcha_num2 = random.randint(1, 10)
+            reset_captcha()
             return
 
         # 3. Rate Limit Check
@@ -373,26 +366,22 @@ def show_contact_form():
         # 4. Send Email
         with st.spinner(texts['sending']):
             if send_email(name, email, message):
-                log_attempt(user_key) # Log successful attempt
-                st.session_state.contact_form_state['submitted'] = True
-                st.session_state.contact_form_state['success_message'] = texts['success_message']
+                log_attempt(user_key)
+                st.session_state.form_success = texts['success_message']
                 
-                # Clear form and reset captcha
-                st.session_state.contact_form_state['name'] = ''
-                st.session_state.contact_form_state['email'] = ''
-                st.session_state.contact_form_state['message'] = ''
-                st.session_state.captcha_num1 = random.randint(1, 10)
-                st.session_state.captcha_num2 = random.randint(1, 10)
+                # Clear form (using keys)
+                st.session_state.contact_name = ""
+                st.session_state.contact_email = ""
+                st.session_state.contact_message = ""
+                reset_captcha()
                 st.rerun()
             else:
                 st.error(texts['error_message'])
     
-    # If the message is successfully sent, display success message
-    if st.session_state.contact_form_state['submitted']:
-        st.success(st.session_state.contact_form_state['success_message'])
-        # Clear the success message
-        st.session_state.contact_form_state['submitted'] = False
-        st.session_state.contact_form_state['success_message'] = ''
+    # Display success message outside form
+    if st.session_state.form_success:
+        st.success(st.session_state.form_success)
+        st.session_state.form_success = "" # Clear after showing
 
 # Prikaz forme
 show_contact_form()
