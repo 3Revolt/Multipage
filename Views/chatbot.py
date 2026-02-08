@@ -336,6 +336,7 @@ def generate_smart_response(prompt):
     # 1. Normalize and Detect Language
     prompt_norm = normalize_text(prompt)
     lang = detect_language(prompt)
+    email = CV_CONTEXT['personal']['email']
     
     # 2. Check for "Who are you" / "Name" / "Intro"
     if any(x in prompt_norm for x in ["name", "who", "ime", "zoves", "zove", "wer", "heiss", "ko si", "predstavi", "intro", "about", "o tebi", "über dich"]):
@@ -345,7 +346,6 @@ def generate_smart_response(prompt):
 
     # 3. Check for "Contact" / "Email" / "Location"
     if any(x in prompt_norm for x in ["contact", "email", "mail", "kontakt", "reach", "javi", "pisi", "telefon", "phone", "nummer", "broj"]):
-        email = CV_CONTEXT['personal']['email']
         if lang == "bs": 
             return f"Možete me kontaktirati direktno putem emaila: **{email}**.\n\nTakođer, možete popuniti **[kontakt formu na početnoj stranici 'O meni'](/#contact-me)**."
         if lang == "de": 
@@ -355,9 +355,9 @@ def generate_smart_response(prompt):
     # Location / Relocation
     if any(x in prompt_norm for x in ["where", "live", "location", "relocate", "move", "gdje", "zivis", "lokacija", "preseli", "wo", "wohnst", "ort", "umzieh"]):
         loc = CV_CONTEXT['personal']['location']
-        if lang == "bs": return f"Trenutno živim u **{loc}**. Za pitanja o preseljenju ili radu na daljinu, molim vas kontaktirajte me direktno."
-        if lang == "de": return f"Ich lebe derzeit in **{loc}**. Bei Fragen zu Umzug oder Remote-Arbeit kontaktieren Sie mich bitte direkt."
-        return f"I currently live in **{loc}**. For questions about relocation or remote work, please contact me directly."
+        if lang == "bs": return f"Trenutno živim u **{loc}**. Za pitanja o preseljenju ili radu na daljinu, molim vas kontaktirajte me direktno putem emaila **{email}** ili preko **[kontakt forme](/#contact-me)**."
+        if lang == "de": return f"Ich lebe derzeit in **{loc}**. Bei Fragen zu Umzug oder Remote-Arbeit kontaktieren Sie mich bitte direkt per E-Mail **{email}** oder über das **[Kontaktformular](/#contact-me)**."
+        return f"I currently live in **{loc}**. For questions about relocation or remote work, please contact me directly via email **{email}** or through the **[contact form](/#contact-me)**."
 
     # 4. Check for Specific Job Queries
     job_match = get_job_info(prompt_norm, lang)
@@ -448,9 +448,9 @@ def generate_smart_response(prompt):
 
     # 11. Salary / Availability
     if any(x in prompt_norm for x in ["salary", "pay", "money", "plata", "novac", "gehalt", "bezahl", "available", "dostupan", "verfugbar", "when start", "kada poceti", "wann anfangen"]):
-         if lang == "bs": return "Za pitanja o plaći i dostupnosti, molim vas da me kontaktirate direktno putem emaila."
-         if lang == "de": return "Für Fragen zu Gehalt und Verfügbarkeit kontaktieren Sie mich bitte direkt per E-Mail."
-         return "For questions regarding salary and availability, please contact me directly via email."
+         if lang == "bs": return f"Za pitanja o plaći i dostupnosti, molim vas da me kontaktirate direktno putem emaila: **{email}**. Također, možete popuniti **[kontakt formu](/#contact-me)**."
+         if lang == "de": return f"Für Fragen zu Gehalt und Verfügbarkeit kontaktieren Sie mich bitte direkt per E-Mail: **{email}**. Alternativ können Sie das **[Kontaktformular](/#contact-me)** ausfüllen."
+         return f"For questions regarding salary and availability, please contact me directly via email: **{email}**. Alternatively, you can fill out the **[contact form](/#contact-me)**."
 
     # 12. Fallback / Small Talk
     if lang == "bs":
