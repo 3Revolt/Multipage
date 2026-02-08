@@ -329,19 +329,26 @@ def show_contact_form():
     # Check Limit
     limit_reached = is_rate_limited(user_key)
 
-    with st.form("contact_form"):
-        # Koristimo 'key' parametar za direktno vezivanje na session_state
-        name = st.text_input(texts['your_name'], key="contact_name")
-        email = st.text_input(texts['your_email'], key="contact_email")
-        message = st.text_area(texts['your_message'], key="contact_message")
-        
-        # CAPTCHA
-        captcha_text = f"{texts['captcha_label']} {st.session_state.captcha_num1} + {st.session_state.captcha_num2}?"
-        captcha_response = st.number_input(captcha_text, min_value=0, max_value=100, step=1)
-        
-        submit_button = st.form_submit_button(texts['send'])
+    # --- Uklonjen st.form blok ---
+    # Koristimo 'key' parametar za direktno vezivanje na session_state
+    # Kada se koristi st.text_input van forme, podaci se šalju odmah, ali to je OK.
+    
+    st.text_input(texts['your_name'], key="contact_name")
+    st.text_input(texts['your_email'], key="contact_email")
+    st.text_area(texts['your_message'], key="contact_message")
+    
+    # CAPTCHA
+    captcha_text = f"{texts['captcha_label']} {st.session_state.captcha_num1} + {st.session_state.captcha_num2}?"
+    captcha_response = st.number_input(captcha_text, min_value=0, max_value=100, step=1)
+    
+    # Obično dugme umjesto form_submit_button
+    submit_button = st.button(texts['send'])
 
     if submit_button:
+        name = st.session_state.contact_name
+        email = st.session_state.contact_email
+        message = st.session_state.contact_message
+
         # 1. Validation
         if not (name and email and message):
             st.error(texts['error_fields'])
@@ -369,10 +376,13 @@ def show_contact_form():
                 log_attempt(user_key)
                 st.session_state.form_success = texts['success_message']
                 
-                # Clear form (using keys)
-                st.session_state.contact_name = ""
-                st.session_state.contact_email = ""
-                st.session_state.contact_message = ""
+                # Clear form (using keys in session_state)
+                # Zbog načina na koji widgeti rade sa key, moramo koristiti callback ili rerun da bi se polja ispraznila vizuelno
+                # Ali za jednostavnost, postavit ćemo vrijednosti na prazno i uraditi rerun.
+                del st.session_state.contact_name
+                del st.session_state.contact_email
+                del st.session_state.contact_message
+                
                 reset_captcha()
                 st.rerun()
             else:
