@@ -340,8 +340,9 @@ def show_contact_form():
         message = st.text_area(texts['your_message'], value=st.session_state.contact_form_state['message'])
         
         # CAPTCHA DISPLAY
+        # Uklonjen eksplicitni 'key' da se izbjegnu konflikti
         captcha_text = f"{texts['captcha_label']} {st.session_state.captcha_num1} + {st.session_state.captcha_num2}?"
-        captcha_response = st.number_input(captcha_text, min_value=0, max_value=100, step=1, key="captcha_input_field")
+        captcha_response = st.number_input(captcha_text, min_value=0, max_value=100, step=1)
         
         submit_button = st.form_submit_button(texts['send'])
 
