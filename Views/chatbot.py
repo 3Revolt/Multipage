@@ -71,19 +71,30 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 CV_CONTEXT = {
     "personal": {
         "name": "Amar Helać",
-        "email": "amar.helac@outlook.com",
-        "role": "IT Support Specialist / System Administrator",
-        "location": "Bosnia and Herzegovina",
-        "current_job": "Federal Employment Institute (Federalni zavod za zapošljavanje) as Technical Support Officer.",
-        "about_en": "I have a keen interest in DevOps practices, combining development and IT operations to improve collaboration and productivity. I can integrate Docker into DevOps pipelines, enabling continuous integration and deployment of applications.",
-        "about_bs": "Imam veliki interes za prakse u DevOps-u, koje kombinuju razvoj i IT operacije radi poboljšanja suradnje i produktivnosti. Mogu integrisati Docker u DevOps tokove rada.",
-        "about_de": "Ich habe ein starkes Interesse an DevOps-Praktiken, die Entwicklung und IT-Operationen kombinieren, um die Zusammenarbeit und Produktivität zu verbessern."
+        "email": "hela3292@hotmail.com",
+        "role": "IT Specialist | Support & Automation",
+        "location": "Sarajevo, Bosnia and Herzegovina",
+        "current_job": "Federal Employment Institute (FZZZ) as Technical Support Officer.",
+        "about_en": "IT professional with over 10 years of experience in system administration and technical support. Currently focused on improving IT workflows through DevOps practices and AI-driven automation.",
+        "about_bs": "IT profesionalac sa preko 10 godina iskustva u sistemskoj administraciji i tehničkoj podršci. Trenutno fokusiran na unapređenje IT procesa kroz DevOps prakse i AI automatizaciju.",
+        "about_de": "IT-Experte mit über 10 Jahren Erfahrung in der Systemadministration und technischem Support. Derzeit fokussiert auf die Optimierung von IT-Abläufen durch DevOps-Praktiken und KI-Automatisierung."
     },
     "education": {
-        "school_en": "Secondary mechanical technical school (2008-2012) - Constructor on computer and CNC machines. QA Manual course.",
+        "school_en": "Secondary mechanical technical school (2008-2012) - Computer Designer and CNC Machine Operator. QA Manual course.",
         "school_bs": "Srednja mašinska tehnička škola (2008-2012) - Konstruktor na računaru i CNC mašinama. QA Manual kurs.",
         "school_de": "Technische Mittelschule für Maschinenbau (2008-2012) - Konstrukteur am Computer und an CNC-Maschinen. QA-Handbuchkurs."
     },
+    "skills": [
+        "Python (Advanced)", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery",
+        "LLM integration (Gemini API, Ollama)", "Multi-agent systems (AutoGen, Aider)", "Docker", "Linux (Ubuntu/Debian)",
+        "CI/CD pipelines", "VMware", "Hyper-V", "Active Directory", "G Suite Admin", "3D modeling (Rodin-3D, .glb)"
+    ],
+    "projects": [
+        "AI Help Desk Ticketing System (Gemini API integration)",
+        "Local AI Development Lab (Ubuntu, Docker, Ollama)",
+        "Web Development Portfolio (React, Tailwind CSS)",
+        "AI 3D Asset Pipeline (.glb integration)"
+    ],
     "jobs": [
         {
             "company": "Federalni zavod za zapošljavanje (Federal Employment Institute)",
@@ -420,6 +431,13 @@ def generate_smart_response(prompt):
         if lang == "de": 
             return f"**Technische Fähigkeiten:** {skills}.\n\n**Soft Skills:** {CV_CONTEXT['soft_skills_de']}"
         return f"**Technical Skills:** {skills}.\n\n**Soft Skills:** {CV_CONTEXT['soft_skills_en']}"
+
+    # 6.1 Check for "Projects"
+    if any(x in prompt_norm for x in ["project", "projekat", "projekt", "ticketing", "lab", "3d", "portfolio"]):
+        projects = "\n".join([f"- {p}" for p in CV_CONTEXT["projects"]])
+        if lang == "bs": return f"Moji ključni projekti uključuju:\n{projects}"
+        if lang == "de": return f"Meine wichtigsten Projekte umfassen:\n{projects}"
+        return f"My key projects include:\n{projects}"
 
     # 7. Education & Certifications
     if any(x in prompt_norm for x in ["education", "school", "university", "degree", "edukacij", "skol", "obrazovan", "ausbildung", "studium", "schule", "certificat", "kurs", "certifikat"]):

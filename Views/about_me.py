@@ -122,30 +122,36 @@ def send_email(name, email, message):
 translations = {
     'English': {
         'title': 'Amar Helać',
-        'description': 'Moreover, I have a keen interest in DevOps practices, combining development and IT operations to improve collaboration and productivity. I can integrate Docker into DevOps pipelines, enabling continuous integration and deployment of applications. This integration ensures that code changes are automatically built, tested, and deployed, leading to faster and more reliable software delivery.',
+        'subtitle': 'IT Specialist | Support & Automation',
+        'description': 'IT professional with over 10 years of experience in system administration and technical support. Currently focused on improving IT workflows through DevOps practices and AI-driven automation to enhance workplace efficiency.',
         'contact_me': '✉️ Contact Me',
         'download_cv': '⬇️ Download CV',
-        'Skills': 'Skills',
+        'Skills': 'Technical Skills',
         'experience': [
-            '● MS office, Google Suite, Photoshop             ',
-            '● Operating System Administration, Web Administration, etc              ',
-            '● Hardware and software maintenance, network equipment, Network Monitoring, etc...             ',
-            '● Web Hosting, Active Directory, G Suite Admin             ',
-            '● System virtualization technologie (VMware, Hyper-V,)            ',
-            '● Linux , Docker , Mac os             ',
-            '● Basic Programmierung (C#, Python)             ',
-            '● QA Manual course.      '
+            '● **Programming & Frameworks:** Python (Advanced), TypeScript, React, Vite, Tailwind CSS, C#, JavaScript/jQuery, Basic programming.',
+            '● **AI & Automation:** LLM integration (Gemini API, Ollama), Multi-agent systems (AutoGen, Aider), Google Cloud API, PowerPoint VBA automation.',
+            '● **DevOps & Cloud:** Docker, Linux (Ubuntu/Debian), CI/CD pipelines, Web Hosting administration, Mac OS.',
+            '● **Virtualization & Infrastructure:** VMware, Hyper-V, VirtualBox (Multi-OS environments).',
+            '● **System Admin:** Active Directory, G Suite Admin, OS Administration, Network & Security equipment configuration, Hardware & Software maintenance, Network Monitoring.',
+            '● **Specialized Tools:** MS Office, Google Suite, Photoshop, Joomla (K2), 3D modeling (Rodin-3D, ComfyUI, .glb), QA Manual course.'
         ],
         'Education': 'Education',
         'skills': [
-            '• 2008 / 2012 - Secondary mechanical technical school                 ',
+            '• 2008 / 2012 - Secondary mechanical technical school',
             '• Constructor on the computer and CNC machines',
+        ],
+        'Projects': 'Key Projects',
+        'project_list': [
+            '🚀 **AI Help Desk Ticketing System:** Developed a custom Linux-based ticketing application integrated with Gemini API for automated response generation.',
+            '🛠️ **Local AI Development Lab:** Built and optimized a high-performance local environment using Ubuntu VMs, Docker, and Ollama for LLM deployment.',
+            '🌐 **Web Development Portfolio:** Created modern web interfaces for companies like INTESECO using React and Tailwind CSS.',
+            '🤖 **AI 3D Asset Pipeline:** Experimented with generative AI tools (Rodin-3D, DINOv3) for creating and integrating .glb files into web applications.'
         ],
         'Languages': 'Languages',
         'jezici': [
-            '● Bosnian                      ',
-            '● English(Level C1)               ',
-            '● Basic of German                          '
+            '● Bosnian (Native)',
+            '● English (Level C1)',
+            '● German (Basic)'
         ],
         'your_name': 'Your Name',
         'your_email': 'Your Email',
@@ -163,30 +169,36 @@ translations = {
     },
     'Bosanski': {
         'title': 'Amar Helać',
-        'description': 'Osim toga, imam veliki interes za prakse u DevOps-u, koje kombinuju razvoj i IT operacije radi poboljšanja suradnje i produktivnosti. Mogu integrisati Docker u DevOps tokove rada, omogućavajući kontinuiranu integraciju i implementaciju aplikacija.',
+        'subtitle': 'IT Specijalista | Podrška i automatizacija',
+        'description': 'IT profesionalac sa preko 10 godina iskustva u sistemskoj administraciji i tehničkoj podršci. Trenutno fokusiran na unapređenje IT procesa kroz DevOps prakse i AI automatizaciju u svrhu poboljšanja efikasnosti rada.',
         'contact_me': '✉️ Kontaktirajte me',
         'download_cv': '⬇️ Preuzmite CV',
-        'Skills': 'Skills',
+        'Skills': 'Tehničke vještine',
         'experience': [
-            '● MS office, Google Suite, Photoshop            ',
-            '● Administracija OS, Web administracija i sl.              ',
-            '● Održavanje hardvera i softvera, mrežne opreme, Network monitoring                  ',
-            '● WEB Hosting, Active Directory, Gsuite admin,                ',
-            '● Tehnologije virtualizacije sistema (VMware, Hyper-V,)                 ',
-            '● Linux, Docker, Mac OS           ',
-            '● Osnove Programiranja (C# , Python)                ',
-            '● QA Manual kurs.           '
+            '● **Programiranje i Frameworks:** Python (Advanced), TypeScript, React, Vite, Tailwind CSS, C#, JavaScript/jQuery, Osnove programiranja.',
+            '● **AI i Automatizacija:** LLM integracija (Gemini API, Ollama), Multi-agent sistemi (AutoGen, Aider), Google Cloud API, PowerPoint VBA automatizacija.',
+            '● **DevOps i Cloud:** Docker, Linux (Ubuntu/Debian), CI/CD pipelines, Web Hosting administracija, Mac OS.',
+            '● **Virtualizacija i Infrastruktura:** VMware, Hyper-V, VirtualBox (Multi-OS okruženja).',
+            '● **Sistemska Administracija:** Active Directory, G Suite Admin, Administracija OS, Konfiguracija mrežne i sigurnosne opreme, Održavanje hardvera i softvera, Network monitoring.',
+            '● **Specijalizovani Alati:** MS Office, Google Suite, Photoshop, Joomla (K2), 3D modelovanje (Rodin-3D, ComfyUI, .glb), QA Manual kurs.'
         ],
         'Education': 'Edukacija',
         'skills': [
-            '• 2008 / 2012 - Srednja mašinska tehnička škola: SMTS             ',
+            '• 2008 / 2012 - Srednja mašinska tehnička škola: SMTS',
             '• Konstruktor na računaru i CNC mašinama',
+        ],
+        'Projects': 'Ključni projekti',
+        'project_list': [
+            '🚀 **AI Help Desk Ticketing System:** Razvoj prilagođene Linux aplikacije za tiketing integrisane sa Gemini API-jem za automatsko generisanje odgovora.',
+            '🛠️ **Local AI Development Lab:** Izgradnja i optimizacija lokalnog okruženja visokih performansi koristeći Ubuntu VM, Docker i Ollama za LLM implementaciju.',
+            '🌐 **Web Development Portfolio:** Kreiranje modernih web interfejsa za kompanije poput INTESECO koristeći React i Tailwind CSS.',
+            '🤖 **AI 3D Asset Pipeline:** Eksperimentisanje sa generativnim AI alatima (Rodin-3D, DINOv3) za kreiranje i integraciju .glb fajlova u web aplikacije.'
         ],
         'Languages': 'Jezici',
         'jezici': [
-            '● Bosnian                      ',
-            '● English(Level C1)               ',
-            '● Osnove Njemačkog                           '
+            '● Bosanski (Maternji)',
+            '● Engleski (Nivo C1)',
+            '● Njemački (Osnove)'
         ],
         'your_name': 'Vaše Ime',
         'your_email': 'Vaš Email',
@@ -204,29 +216,36 @@ translations = {
     },
     'Deutsch': {
         'title': 'Amar Helać',
-        'description': 'Außerdem habe ich ein starkes Interesse an DevOps-Praktiken, die Entwicklung und IT-Operationen kombinieren, um die Zusammenarbeit und Produktivität zu verbessern. Ich kann Docker in DevOps-Pipelines integrieren, um kontinuierliche Integration und Bereitstellung von Anwendungen zu ermöglichen. Diese Integration stellt sicher, dass Code-Änderungen automatisch erstellt, getestet und bereitgestellt werden, was zu schnellerer und zuverlässigerer Software-Lieferung führt.',
+        'subtitle': 'IT-Spezialist | Support & Automatisierung',
+        'description': 'IT-Experte mit über 10 Jahren Erfahrung in der Systemadministration und technischem Support. Derzeit fokussiert auf die Optimierung von IT-Abläufe durch DevOps-Praktiken und KI-Automatisierung zur Steigerung der Arbeitseffizienz.',
         'contact_me': '✉️ Kontaktieren Sie mich',
         'download_cv': '⬇️ CV herunterladen',
-        'Skills': 'Fähigkeit',
+        'Skills': 'Technische Fähigkeiten',
         'experience': [
-            '● Microsoft Office, Google Suite, Photoshop               ',
-            '● Betriebssystemadministration, Webadministration, usw.         ',
-            '●  Webhosting, Active Directory, G Suite-Verwaltung                        ',
-            '● Systemvirtualisterungstechnologien (VMware, Hyper-V,)                        ',
-            '● Linux, Docker, Mac OS                       ',
-            '● Grundlegende Programmierung (C#, Python)                       ',
-            '● QA-Handbuchkurs.                           '
+            '● **Programmierung & Frameworks:** Python (Advanced), TypeScript, React, Vite, Tailwind CSS, C#, JavaScript/jQuery, Grundlegende Programmierung.',
+            '● **KI & Automatisierung:** LLM-Integration (Gemini API, Ollama), Multi-Agenten-Systeme (AutoGen, Aider), Google Cloud API, PowerPoint VBA-Automatisierung.',
+            '● **DevOps & Cloud:** Docker, Linux (Ubuntu/Debian), CI-CD-Pipelines, Web-Hosting-Administration, Mac OS.',
+            '● **Virtualisierung & Infrastruktur:** VMware, Hyper-V, VirtualBox (Multi-OS-Umgebungen).',
+            '● **Systemadministration:** Active Directory, G Suite Admin, Betriebssystemadministration, Konfiguration von Netzwerk- und Sicherheitsgeräten, Hardware- und Softwarewartung, Netzwerküberwachung.',
+            '● **Spezialisierte Tools:** MS Office, Google Suite, Photoshop, Joomla (K2), 3D-Modellierung (Rodin-3D, ComfyUI, .glb), QA-Handbuchkurs.'
         ],
         'Education': 'Die Ausbildung',
         'skills': [
-            '•   2008 / 2012 – Technische Mittelschule für Maschinenbau         ',
-            '•   Konstrukteur am Computer und an CNC-Maschinen',
+            '• 2008 / 2012 – Technische Mittelschule für Maschinenbau',
+            '• Konstrukteur am Computer und an CNC-Maschinen',
+        ],
+        'Projects': 'Wichtige Projekte',
+        'project_list': [
+            '🚀 **AI Help Desk Ticketing System:** Entwicklung einer benutzerdefinierten Linux-basierten Ticketing-Anwendung, die mit der Gemini-API für die automatische Antwortgenerierung integriert ist.',
+            '🛠️ **Local AI Development Lab:** Aufbau und Optimierung einer lokalen Hochleistungsumgebung mit Ubuntu-VMs, Docker und Ollama für die LLM-Bereitstellung.',
+            '🌐 **Web Development Portfolio:** Erstellung moderner Web-Schnittstellen für Unternehmen wie INTESECO mit React und Tailwind CSS.',
+            '🤖 **AI 3D Asset Pipeline:** Experimentieren mit generativen KI-Tools (Rodin-3D, DINOv3) zur Erstellung und Integration von .glb-Dateien in Webanwendungen.'
         ],
         'Languages': 'Sprache',
         'jezici': [
-            '● Bosnian                      ',
-            '● English(Level C1)               ',
-            '● Grundlegend Deutschland                           '
+            '● Bosnisch (Muttersprache)',
+            '● Englisch (Niveau C1)',
+            '● Deutsch (Grundlagen)'
         ],
         'your_name': 'Ihr Name',
         'your_email': 'Ihre E-Mail',
@@ -272,6 +291,7 @@ with col1:
 
 with col2:
     st.title(texts['title'], anchor=False)
+    st.subheader(texts['subtitle'], anchor=False)
     st.write(texts['description'])
 
     # Dugme za skrolovanje koristeći HTML
@@ -291,6 +311,11 @@ with col2:
 st.write("\n")
 st.subheader(texts['Skills'], anchor=False)
 st.write('\n'.join(texts['experience']))
+
+# --- Projects ---
+st.write("\n")
+st.subheader(texts['Projects'], anchor=False)
+st.write('\n'.join(texts['project_list']))
 
 # --- Education ---
 st.write("\n")
