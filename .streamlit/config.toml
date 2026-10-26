@@ -13,3 +13,6 @@ textColor = "#fff"
 
 [client]
 toolbarMode = "minimal"
+[server]
+# Fajlovi iz foldera static/ se serviraju na URL-u app/static/<ime> (browser ih kešira)
+enableStaticServing = true

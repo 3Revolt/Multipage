@@ -1,7 +1,5 @@
 import streamlit as st
-import base64
-from pathlib import Path
-from config import selected_language as default_language, assets_dir  # Import from config.py
+from config import selected_language as default_language  # Import from config.py
 
 # --- LANGUAGE SETUP ---
 # Set the default language if not in session state
@@ -68,18 +66,16 @@ pg = st.navigation(
 # --- SHARED ON ALL PAGES ---
 st.sidebar.markdown("Digital CV by Amar Helać")
 
-# --- Load GIF and Encode in Base64 (keširano - ne čita se s diska pri svakom kliku) ---
-@st.cache_data
-def load_gif_base64(gif_path):
-    return base64.b64encode(Path(gif_path).read_bytes()).decode("utf-8")
-
-encoded_gif = load_gif_base64(str(Path(assets_dir) / "Background.gif"))
+# --- SIDEBAR BACKGROUND GIF ---
+# GIF (~19 MB) se servira kao statički fajl (static/Background.gif) umjesto da se kao base64
+# šalje kroz WebSocket pri svakom kliku - to je rušilo vezu sa serverom na Streamlit Cloudu.
+SIDEBAR_GIF_URL = "app/static/Background.gif"
 
 # --- SIDEBAR BACKGROUND IMAGE AND TEXT COLOR ---
 sidebar_bg_img_and_text_color = f"""
 <style>
 [data-testid="stSidebar"] > div:first-child {{
-    background-image: url("data:image/gif;base64,{encoded_gif}");
+    background-image: url("{SIDEBAR_GIF_URL}");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
