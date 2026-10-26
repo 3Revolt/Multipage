@@ -5,14 +5,15 @@ from config import selected_language as default_language, assets_dir  # Import f
 
 # --- LANGUAGE SETUP ---
 # Set the default language if not in session state
-if 'selected_language' not in st.session_state:
+LANGUAGE_OPTIONS = ["Bosanski", "English", "Deutsch"]
+if st.session_state.get('selected_language') not in LANGUAGE_OPTIONS:
     st.session_state.selected_language = default_language
 
 # Language selection in sidebar
 selected_language = st.sidebar.selectbox(
     "Select Language / Izaberite jezik / Sprache auswählen", 
-    options=["Bosanski", "English", "Deutsch"],
-    index=["Bosanski", "English", "Deutsch"].index(st.session_state.selected_language)  # Use the language from session state
+    options=LANGUAGE_OPTIONS,
+    index=LANGUAGE_OPTIONS.index(st.session_state.selected_language)  # Use the language from session state
 )
 
 # Store selected language in session state
@@ -67,11 +68,12 @@ pg = st.navigation(
 # --- SHARED ON ALL PAGES ---
 st.sidebar.markdown("Digital CV by Amar Helać")
 
-# --- Load GIF and Encode in Base64 ---
-gif_path = Path(assets_dir) / "Background.gif"
-with open(gif_path, "rb") as gif_file:
-    gif_data = gif_file.read()
-    encoded_gif = base64.b64encode(gif_data).decode("utf-8")
+# --- Load GIF and Encode in Base64 (keširano - ne čita se s diska pri svakom kliku) ---
+@st.cache_data
+def load_gif_base64(gif_path):
+    return base64.b64encode(Path(gif_path).read_bytes()).decode("utf-8")
+
+encoded_gif = load_gif_base64(str(Path(assets_dir) / "Background.gif"))
 
 # --- SIDEBAR BACKGROUND IMAGE AND TEXT COLOR ---
 sidebar_bg_img_and_text_color = f"""
