@@ -485,12 +485,13 @@ INTENT_MATCHER = KeywordMatcher(INTENTS)
 ASPECT_MATCHER = KeywordMatcher(JOB_ASPECTS)
 COMPANY_MATCHER = KeywordMatcher({job["id"]: job["aliases"] for job in cv.JOBS}, fuzzy_cutoff=0.8)
 KNOWLEDGE_MATCHER = KeywordMatcher({item["id"]: item["aliases"] for item in KNOWLEDGE}, fuzzy_cutoff=0.88)
-PROJECT_MATCHER = KeywordMatcher({
+PROJECT_ALIASES = {
     "helpdesk": ["ticketing:2", "ticket system*:3", "tiket*:2", "help desk ticketing:4", "ai help desk:4", "helpdesk sistem*:3", "helpdesk system*:3"],
     "ailab": ["ai lab:3", "local ai:3", "lokaln* ai:3", "development lab:3", "lab:1.5", "laboratorij*:1.5", "lokaln* okruzenj*:2"],
     "webdev": ["web development portfolio:4", "inteseco:3", "web portfolio:3", "web interfejs*:2", "web interface*:2"],
     "3d": ["3d asset*:3", "asset pipeline:3", "3d pipeline:3", "rodin3d:2", "dinov3:2", "glb:2", "3d:1"],
-}, fuzzy_cutoff=0.88)
+}
+PROJECT_MATCHER = KeywordMatcher(PROJECT_ALIASES, fuzzy_cutoff=0.88)
 FOLLOW_UP_SET = set(FOLLOW_UP)
 
 
@@ -1193,6 +1194,7 @@ SIMPLE_HANDLERS = {
     "location": answer_location, "relocation": answer_relocation, "current": answer_current, "experience": answer_experience,
     "total_years": answer_total_years, "longest": answer_longest, "first_job": answer_first_job, "previous": answer_previous,
     "job_change": answer_job_change, "skills": answer_skills, "projects": answer_projects, "courses": answer_courses,
+    "education": answer_education,
     "languages": answer_languages, "soft_skills": answer_soft_skills, "strengths": answer_strengths,
     "salary": answer_salary, "availability": answer_availability,
     "job_search": answer_job_search, "goals": answer_goals, "cv_download": answer_cv_download, "website": answer_website,
