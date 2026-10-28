@@ -315,7 +315,7 @@ KNOWLEDGE = [
      "category": "sysadmin", "evidence": ["budget", "purchasing", "costs"]},
     {"id": "sales", "name": {"bs": "Prodaja i pregovaranje", "en": "Sales & negotiation", "de": "Vertrieb & Verhandlung"},
      "aliases": ["prodaj*", "sales", "sale", "selling", "verkauf*", "vertrieb*", "pregovar*", "negotiat*", "verhandl*", "kupc*", "customers", "komercijal*", "commercial*", "b2b"],
-     "category": "tools", "evidence": ["sale of services", "negotiat", "orders"]},
+     "category": "tools", "evidence": ["sale of services", "selling", "negotiat", "orders"]},
     {"id": "logistics", "name": {"bs": "Logistika i skladište", "en": "Logistics & warehouse", "de": "Logistik & Lager"},
      "aliases": ["logistik*", "logistic*", "skladist*", "warehouse*", "lager*", "dostav*", "delivery", "lieferung*", "vozac*", "driver*", "vozack*", "dispecer*", "dispatcher*"],
      "category": "tools", "evidence": ["delivery", "warehouse", "dispatcher"]},
