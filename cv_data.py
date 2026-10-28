@@ -32,6 +32,10 @@ def format_period(job, lang):
 PERSONAL = {
     "name": "Amar Helać",
     "email": "hela3292@hotmail.com",
+    "phone": "+387 61 511 227",
+    "birth_date": "03.02.1992",
+    "website": "amarhelac.is-a.dev",
+    "city": {"bs": "Sarajevo, BiH", "en": "Sarajevo, Bosnia and Herzegovina", "de": "Sarajevo, Bosnien und Herzegowina"},
     "location": {
         "bs": "Sarajevo, Bosna i Hercegovina",
         "en": "Sarajevo, Bosnia and Herzegovina",
@@ -53,6 +57,12 @@ SOFT_SKILLS = {
     "bs": ["Komunikacija", "Timski rad", "Rješavanje problema", "Pregovaranje", "Organizacija", "Prilagodljivost"],
     "en": ["Communication", "Teamwork", "Problem solving", "Negotiation", "Organization", "Adaptability"],
     "de": ["Kommunikation", "Teamarbeit", "Problemlösung", "Verhandlung", "Organisation", "Anpassungsfähigkeit"],
+}
+
+DRIVING_LICENSE = {
+    "bs": "Vozačka dozvola B i C1 kategorije",
+    "en": "Driving licence categories B and C1",
+    "de": "Führerschein der Klassen B und C1",
 }
 
 # --- TEHNIČKE VJEŠTINE (prikaz na stranici "O meni") ---
@@ -108,7 +118,7 @@ SKILL_CATEGORIES = [
         "items": {
             "bs": ["MS Office", "Google Suite", "Photoshop", "Joomla (K2)", "3D modelovanje (Rodin-3D, ComfyUI, .glb)", "QA Manual kurs"],
             "en": ["MS Office", "Google Suite", "Photoshop", "Joomla (K2)", "3D modeling (Rodin-3D, ComfyUI, .glb)", "QA Manual course"],
-            "de": ["MS Office", "Google Suite", "Photoshop", "Joomla (K2)", "3D-Modellierung (Rodin-3D, ComfyUI, .glb)", "QA-Handbuchkurs"],
+            "de": ["MS Office", "Google Suite", "Photoshop", "Joomla (K2)", "3D-Modellierung (Rodin-3D, ComfyUI, .glb)", "Kurs für manuelles Testen (QA)"],
         },
     },
 ]
@@ -204,7 +214,7 @@ EDUCATION = {
     "courses": {
         "bs": ["QA Manual kurs (ručno testiranje softvera)"],
         "en": ["QA Manual course (manual software testing)"],
-        "de": ["QA-Handbuchkurs (manuelles Softwaretesten)"],
+        "de": ["Kurs für manuelles Softwaretesten (QA)"],
     },
 }
 

@@ -679,11 +679,27 @@ def answer_name(lang, state):
              f"Mein Name ist **{cv.PERSONAL['name']}**. 😊")
 
 
+def bs_years_word(n):
+    if n % 10 == 1 and n != 11:
+        return "godina"
+    if 2 <= n % 10 <= 4 and not 12 <= n <= 14:
+        return "godine"
+    return "godina"
+
+
+def current_age():
+    day, month, year = (int(x) for x in cv.PERSONAL["birth_date"].split("."))
+    today = date.today()
+    return today.year - year - ((today.month, today.day) < (month, day))
+
+
 def answer_age(lang, state):
+    birth = cv.PERSONAL["birth_date"]
+    age = current_age()
     return L(lang,
-             "Datum rođenja nije naveden u CV-u. Mogu reći da imam preko 10 godina radnog iskustva (od 2014.) i srednju školu završenu 2012. godine. ",
-             "My date of birth isn't listed in the CV. I can tell you that I have over 10 years of work experience (since 2014) and finished secondary school in 2012. ",
-             "Mein Geburtsdatum steht nicht im Lebenslauf. Ich kann Ihnen sagen, dass ich über 10 Jahre Berufserfahrung habe (seit 2014) und die Mittelschule 2012 abgeschlossen habe. ") + contact_hint(lang)
+             f"Rođen sam **{birth}** ({age} {bs_years_word(age)}). Imam preko 10 godina radnog iskustva, od 2014. godine.",
+             f"I was born on **{birth}** ({age} years old). I have over 10 years of work experience, since 2014.",
+             f"Ich bin am **{birth}** geboren ({age} Jahre alt). Ich habe über 10 Jahre Berufserfahrung, seit 2014.")
 
 
 def answer_personal(lang, state):
@@ -716,10 +732,11 @@ def answer_contact(lang, state):
 
 def answer_phone(lang, state):
     email = cv.PERSONAL["email"]
+    phone = cv.PERSONAL["phone"]
     return L(lang,
-             f"Broj telefona nije javno objavljen na ovom sajtu. Pišite mi na **{email}** ili putem **[kontakt forme](/#contact-me)** i rado ću vam poslati broj ili se javiti.",
-             f"My phone number isn't published on this site. Write to **{email}** or use the **[contact form](/#contact-me)** and I'll gladly share it or call you back.",
-             f"Meine Telefonnummer ist auf dieser Seite nicht veröffentlicht. Schreiben Sie an **{email}** oder nutzen Sie das **[Kontaktformular](/#contact-me)** – ich melde mich gerne.")
+             f"Moj broj telefona je **{phone}**. Možete mi pisati i na **{email}** ili putem **[kontakt forme](/#contact-me)**.",
+             f"My phone number is **{phone}**. You can also write to **{email}** or use the **[contact form](/#contact-me)**.",
+             f"Meine Telefonnummer ist **{phone}**. Sie können mir auch an **{email}** schreiben oder das **[Kontaktformular](/#contact-me)** nutzen.")
 
 
 def answer_social(lang, state):
