@@ -124,44 +124,60 @@ PROJECTS = [
     {
         "id": "helpdesk",
         "emoji": "🚀",
-        "name": "AI Help Desk Ticketing System",
+        "name": {
+            "bs": "Help Desk sistem za tikete sa AI integracijom",
+            "en": "Help Desk Ticketing System with AI Integration",
+            "de": "Help-Desk-Ticketsystem mit KI-Integration",
+        },
         "description": {
-            "bs": "Razvoj prilagođene Linux aplikacije za tiketing integrisane sa Gemini API-jem za automatsko generisanje odgovora.",
-            "en": "Developed a custom Linux-based ticketing application integrated with Gemini API for automated response generation.",
-            "de": "Entwicklung einer benutzerdefinierten Linux-basierten Ticketing-Anwendung, die mit der Gemini-API für die automatische Antwortgenerierung integriert ist.",
+            "bs": "Razvio i implementirao vlastiti Help Desk sistem za upravljanje tiketima u Linux okruženju, u koji sam integrisao AI funkciju (Gemini API) za automatske prijedloge odgovora na zahtjeve korisnika.",
+            "en": "Designed and implemented a custom Linux-based help desk ticketing system and integrated an AI feature (Gemini API) that automatically drafts responses to user requests.",
+            "de": "Konzeption und Implementierung eines eigenen Linux-basierten Help-Desk-Ticketsystems mit integrierter KI-Funktion (Gemini API), die automatisch Antwortvorschläge auf Benutzeranfragen erstellt.",
         },
         "tech": ["Linux", "Gemini API", "Python"],
     },
     {
         "id": "ailab",
         "emoji": "🛠️",
-        "name": "Local AI Development Lab",
+        "name": {
+            "bs": "Lokalna AI razvojna laboratorija",
+            "en": "Local AI Development Lab",
+            "de": "Lokales KI-Entwicklungslabor",
+        },
         "description": {
-            "bs": "Izgradnja i optimizacija lokalnog okruženja visokih performansi koristeći Ubuntu VM, Docker i Ollama za LLM implementaciju.",
-            "en": "Built and optimized a high-performance local environment using Ubuntu VMs, Docker, and Ollama for LLM deployment.",
-            "de": "Aufbau und Optimierung einer lokalen Hochleistungsumgebung mit Ubuntu-VMs, Docker und Ollama für die LLM-Bereitstellung.",
+            "bs": "Postavio i optimizovao lokalno razvojno okruženje visokih performansi (Ubuntu VM, Docker, Ollama) za pokretanje i testiranje jezičkih modela (LLM) bez oslanjanja na cloud servise.",
+            "en": "Set up and optimized a high-performance local development environment (Ubuntu VMs, Docker, Ollama) for running and testing large language models (LLMs) without relying on cloud services.",
+            "de": "Aufbau und Optimierung einer leistungsstarken lokalen Entwicklungsumgebung (Ubuntu-VMs, Docker, Ollama) zum Betrieb und Testen von Sprachmodellen (LLMs) ohne Abhängigkeit von Cloud-Diensten.",
         },
         "tech": ["Ubuntu", "Docker", "Ollama", "VMs"],
     },
     {
         "id": "webdev",
         "emoji": "🌐",
-        "name": "Web Development Portfolio",
+        "name": {
+            "bs": "Web razvoj za klijente",
+            "en": "Client Web Development",
+            "de": "Webentwicklung für Kunden",
+        },
         "description": {
-            "bs": "Kreiranje modernih web interfejsa za kompanije poput INTESECO koristeći React i Tailwind CSS.",
-            "en": "Created modern web interfaces for companies like INTESECO using React and Tailwind CSS.",
-            "de": "Erstellung moderner Web-Schnittstellen für Unternehmen wie INTESECO mit React und Tailwind CSS.",
+            "bs": "Dizajnirao i implementirao moderne web interfejse za kompanije poput INTESECO koristeći React i Tailwind CSS.",
+            "en": "Designed and built modern web interfaces for companies such as INTESECO using React and Tailwind CSS.",
+            "de": "Konzeption und Umsetzung moderner Weboberflächen für Unternehmen wie INTESECO mit React und Tailwind CSS.",
         },
         "tech": ["React", "Tailwind CSS", "TypeScript", "Vite"],
     },
     {
         "id": "3d",
         "emoji": "🤖",
-        "name": "AI 3D Asset Pipeline",
+        "name": {
+            "bs": "3D pipeline uz generativnu AI",
+            "en": "AI-Assisted 3D Asset Pipeline",
+            "de": "KI-gestützte 3D-Asset-Pipeline",
+        },
         "description": {
-            "bs": "Eksperimentisanje sa generativnim AI alatima (Rodin-3D, DINOv3) za kreiranje i integraciju .glb fajlova u web aplikacije.",
-            "en": "Experimented with generative AI tools (Rodin-3D, DINOv3) for creating and integrating .glb files into web applications.",
-            "de": "Experimentieren mit generativen KI-Tools (Rodin-3D, DINOv3) zur Erstellung und Integration von .glb-Dateien in Webanwendungen.",
+            "bs": "Razvio tok rada za kreiranje 3D modela pomoću generativnih AI alata (Rodin-3D, DINOv3) i njihovu integraciju u web aplikacije kao .glb fajlove.",
+            "en": "Developed a workflow for creating 3D models with generative AI tools (Rodin-3D, DINOv3) and integrating them into web applications as .glb files.",
+            "de": "Entwicklung eines Workflows zur Erstellung von 3D-Modellen mit generativen KI-Tools (Rodin-3D, DINOv3) und deren Integration in Webanwendungen als .glb-Dateien.",
         },
         "tech": ["Rodin-3D", "DINOv3", "ComfyUI", ".glb"],
     },
@@ -169,7 +185,7 @@ PROJECTS = [
 
 
 def project_line(project, lang):
-    return f"{project['emoji']} **{project['name']}:** {project['description'][lang]}"
+    return f"{project['emoji']} **{tr(project['name'], lang)}:** {project['description'][lang]}"
 
 
 # --- EDUKACIJA ---

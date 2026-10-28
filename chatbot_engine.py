@@ -486,7 +486,8 @@ ASPECT_MATCHER = KeywordMatcher(JOB_ASPECTS)
 COMPANY_MATCHER = KeywordMatcher({job["id"]: job["aliases"] for job in cv.JOBS}, fuzzy_cutoff=0.8)
 KNOWLEDGE_MATCHER = KeywordMatcher({item["id"]: item["aliases"] for item in KNOWLEDGE}, fuzzy_cutoff=0.88)
 PROJECT_ALIASES = {
-    "helpdesk": ["ticketing:2", "ticket system*:3", "tiket*:2", "help desk ticketing:4", "ai help desk:4", "helpdesk sistem*:3", "helpdesk system*:3"],
+    "helpdesk": ["ticketing:2", "ticket system*:3", "ticketsystem*:3", "tiket*:2", "help desk ticketing:4", "ai help desk:4", "help desk sistem*:3",
+                 "helpdesk sistem*:3", "helpdesk system*:3", "help desk system*:3", "ai integracij*:3", "ai integration:3", "ki integration:3"],
     "ailab": ["ai lab:3", "local ai:3", "lokaln* ai:3", "development lab:3", "lab:1.5", "laboratorij*:1.5", "lokaln* okruzenj*:2"],
     "webdev": ["web development portfolio:4", "inteseco:3", "web portfolio:3", "web interfejs*:2", "web interface*:2"],
     "3d": ["3d asset*:3", "asset pipeline:3", "3d pipeline:3", "rodin3d:2", "dinov3:2", "glb:2", "3d:1"],
@@ -937,19 +938,19 @@ def answer_strengths(lang, state):
              f"- **Automatizacija** – pišem skripte i koristim alate za automatizaciju, plus AI integracije (Gemini API, Ollama)\n"
              f"- **Širina** – telekom, bankarski POS/ATM, ERP, javni sektor, web razvoj (React)\n"
              f"- **Komunikacija** – godine rada direktno sa korisnicima, pisanje dokumentacije i procedura\n"
-             f"- **Brzo učenje** – samostalno sam izgradio lokalni AI lab i AI help desk sistem",
+             f"- **Brzo učenje** – samostalno sam razvio Help Desk sistem sa AI integracijom i lokalnu AI laboratoriju",
              f"What I bring to a team:\n\n"
              f"- **{years}+ years of hands-on work** – from user support to system administration (Active Directory, networks, servers, security)\n"
              f"- **Automation** – I write scripts and use automation tools, plus AI integrations (Gemini API, Ollama)\n"
              f"- **Breadth** – telecom, banking POS/ATM, ERP, public sector, web development (React)\n"
              f"- **Communication** – years of working directly with users, writing documentation and procedures\n"
-             f"- **Fast learner** – I independently built a local AI lab and an AI help desk system",
+             f"- **Fast learner** – I independently developed a help desk system with AI integration and a local AI lab",
              f"Was ich einem Team biete:\n\n"
              f"- **{years}+ Jahre Praxis** – vom Benutzersupport bis zur Systemadministration (Active Directory, Netzwerke, Server, Sicherheit)\n"
              f"- **Automatisierung** – ich schreibe Skripte und nutze Automatisierungstools, dazu KI-Integrationen (Gemini API, Ollama)\n"
              f"- **Bandbreite** – Telekom, Bank-POS/ATM, ERP, öffentlicher Sektor, Webentwicklung (React)\n"
              f"- **Kommunikation** – jahrelange direkte Arbeit mit Benutzern, Erstellung von Dokumentationen und Verfahren\n"
-             f"- **Schnelle Auffassungsgabe** – ich habe selbstständig ein lokales KI-Labor und ein KI-Help-Desk-System aufgebaut")
+             f"- **Schnelle Auffassungsgabe** – ich habe selbstständig ein Help-Desk-System mit KI-Integration und ein lokales KI-Labor entwickelt")
 
 
 def answer_salary(lang, state):
@@ -977,11 +978,11 @@ def answer_job_search(lang, state):
 def answer_goals(lang, state):
     return L(lang,
              "Moj fokus je unapređenje IT procesa kroz **DevOps prakse** i **AI automatizaciju**. Cilj mi je da od klasične podrške i administracije "
-             "pređem na poziciju gdje gradim automatizovane sisteme – kao što je moj AI Help Desk sa Gemini API-jem ili lokalni LLM lab sa Ollamom.",
+             "pređem na poziciju gdje gradim automatizovane sisteme – kao što je moj Help Desk sistem sa integrisanom AI funkcijom (Gemini API) ili lokalna LLM laboratorija sa Ollamom.",
              "My focus is improving IT workflows through **DevOps practices** and **AI automation**. My goal is to move from classic support and administration "
-             "to a role where I build automated systems – like my AI Help Desk with Gemini API or my local LLM lab with Ollama.",
+             "to a role where I build automated systems – like my help desk system with integrated AI (Gemini API) or my local LLM lab with Ollama.",
              "Mein Fokus liegt auf der Optimierung von IT-Abläufen durch **DevOps-Praktiken** und **KI-Automatisierung**. Mein Ziel ist es, vom klassischen Support "
-             "und der Administration in eine Rolle zu wechseln, in der ich automatisierte Systeme aufbaue – wie mein KI-Help-Desk mit Gemini API oder mein lokales LLM-Labor mit Ollama.")
+             "und der Administration in eine Rolle zu wechseln, in der ich automatisierte Systeme aufbaue – wie mein Help-Desk-System mit integrierter KI (Gemini API) oder mein lokales LLM-Labor mit Ollama.")
 
 
 def answer_cv_download(lang, state):
@@ -1118,7 +1119,7 @@ def _build_documents():
         for i in range(len(job["duties"]["en"])):
             docs.append(({lg: job["duties"][lg][i] for lg in LANGS}, ("job", job["id"])))
     for project in cv.PROJECTS:
-        docs.append(({lg: f"{project['name']}: {project['description'][lg]}" for lg in LANGS}, ("project", project["id"])))
+        docs.append(({lg: f"{tr(project['name'], lg)}: {project['description'][lg]}" for lg in LANGS}, ("project", project["id"])))
     for category in cv.SKILL_CATEGORIES:
         docs.append(({lg: cv.skill_category_line(category, lg) for lg in LANGS}, ("skills", category["id"])))
     docs.append(({lg: cv.PERSONAL["description"][lg] for lg in LANGS}, ("about", None)))
