@@ -490,7 +490,7 @@ PROJECT_ALIASES = {
                  "helpdesk sistem*:3", "helpdesk system*:3", "help desk system*:3", "ai integracij*:3", "ai integration:3", "ki integration:3"],
     "ailab": ["ai lab:3", "local ai:3", "lokaln* ai:3", "development lab:3", "lab:1.5", "laboratorij*:1.5", "lokaln* okruzenj*:2"],
     "webdev": ["web development portfolio:4", "inteseco:3", "web portfolio:3", "web interfejs*:2", "web interface*:2"],
-    "3d": ["3d asset*:3", "asset pipeline:3", "3d pipeline:3", "rodin3d:2", "dinov3:2", "glb:2", "3d:1"],
+    "3d": ["3d asset*:3", "asset pipeline:3", "3d pipeline:3", "3d model*:3", "image to 3d:4", "slik* u 3d:4", "iz slik*:2", "rodin3d:2", "dinov3:2", "comfyui:2", "glb:2", "3d:1"],
 }
 PROJECT_MATCHER = KeywordMatcher(PROJECT_ALIASES, fuzzy_cutoff=0.88)
 FOLLOW_UP_SET = set(FOLLOW_UP)
