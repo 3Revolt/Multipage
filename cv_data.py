@@ -71,27 +71,27 @@ SKILL_CATEGORIES = [
         "id": "programming",
         "name": {"bs": "Programiranje i Frameworks", "en": "Programming & Frameworks", "de": "Programmierung & Frameworks"},
         "items": {
-            "bs": ["Python (Advanced)", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery", "Osnove programiranja"],
-            "en": ["Python (Advanced)", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery", "Basic programming"],
-            "de": ["Python (Advanced)", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery", "Grundlegende Programmierung"],
+            "bs": ["Python (Advanced)", "Streamlit", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery", "Osnove programiranja"],
+            "en": ["Python (Advanced)", "Streamlit", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery", "Basic programming"],
+            "de": ["Python (Advanced)", "Streamlit", "TypeScript", "React", "Vite", "Tailwind CSS", "C#", "JavaScript/jQuery", "Grundlegende Programmierung"],
         },
     },
     {
         "id": "ai",
         "name": {"bs": "AI i Automatizacija", "en": "AI & Automation", "de": "KI & Automatisierung"},
         "items": {
-            "bs": ["LLM integracija (Gemini API, Ollama)", "Multi-agent sistemi (AutoGen, Aider)", "Google Cloud API", "PowerPoint VBA automatizacija"],
-            "en": ["LLM integration (Gemini API, Ollama)", "Multi-agent systems (AutoGen, Aider)", "Google Cloud API", "PowerPoint VBA automation"],
-            "de": ["LLM-Integration (Gemini API, Ollama)", "Multi-Agenten-Systeme (AutoGen, Aider)", "Google Cloud API", "PowerPoint VBA-Automatisierung"],
+            "bs": ["LLM integracija (Gemini API, Ollama)", "AI agenti za programiranje (Claude Code, Aider)", "Automatizacija pomoću AI agenata", "Multi-agent sistemi (AutoGen)", "Google Cloud API", "Google Apps Script", "PowerPoint VBA automatizacija"],
+            "en": ["LLM integration (Gemini API, Ollama)", "AI coding agents (Claude Code, Aider)", "AI agent automation", "Multi-agent systems (AutoGen)", "Google Cloud API", "Google Apps Script", "PowerPoint VBA automation"],
+            "de": ["LLM-Integration (Gemini API, Ollama)", "KI-Coding-Agenten (Claude Code, Aider)", "Automatisierung mit KI-Agenten", "Multi-Agenten-Systeme (AutoGen)", "Google Cloud API", "Google Apps Script", "PowerPoint VBA-Automatisierung"],
         },
     },
     {
         "id": "devops",
         "name": {"bs": "DevOps i Cloud", "en": "DevOps & Cloud", "de": "DevOps & Cloud"},
         "items": {
-            "bs": ["Docker", "Linux (Ubuntu/Debian)", "CI/CD pipelines", "Web Hosting administracija", "Mac OS"],
-            "en": ["Docker", "Linux (Ubuntu/Debian)", "CI/CD pipelines", "Web Hosting administration", "Mac OS"],
-            "de": ["Docker", "Linux (Ubuntu/Debian)", "CI-CD-Pipelines", "Web-Hosting-Administration", "Mac OS"],
+            "bs": ["Docker", "Linux (Ubuntu/Debian)", "CI/CD pipelines", "Git / GitHub", "GitHub Pages", "Cloudflare", "Web Hosting administracija", "Mac OS"],
+            "en": ["Docker", "Linux (Ubuntu/Debian)", "CI/CD pipelines", "Git / GitHub", "GitHub Pages", "Cloudflare", "Web Hosting administration", "Mac OS"],
+            "de": ["Docker", "Linux (Ubuntu/Debian)", "CI-CD-Pipelines", "Git / GitHub", "GitHub Pages", "Cloudflare", "Web-Hosting-Administration", "Mac OS"],
         },
     },
     {
@@ -131,6 +131,21 @@ def skill_category_line(category, lang):
 
 # --- PROJEKTI ---
 PROJECTS = [
+    {
+        "id": "cvsite",
+        "emoji": "💬",
+        "name": {
+            "bs": "Interaktivni digitalni CV sa offline chatbotom",
+            "en": "Interactive Digital CV with Offline Chatbot",
+            "de": "Interaktiver digitaler Lebenslauf mit Offline-Chatbot",
+        },
+        "description": {
+            "bs": "Razvio višejezični web CV u dvije verzije (Python/Streamlit i statička HTML/JavaScript verzija na GitHub Pages) sa vlastitim offline chatbotom za prepoznavanje pitanja, sigurnom kontakt formom (Google Apps Script, Cloudflare Turnstile, automatski odgovor) i automatskim generisanjem PDF CV-a – uz korištenje AI agenta Claude Code u razvoju.",
+            "en": "Built a multilingual web CV in two versions (Python/Streamlit and a static HTML/JavaScript version on GitHub Pages) with a custom offline chatbot for question recognition, a secure contact form (Google Apps Script, Cloudflare Turnstile, auto-reply) and automated PDF CV generation – using the AI agent Claude Code during development.",
+            "de": "Entwicklung eines mehrsprachigen Web-Lebenslaufs in zwei Versionen (Python/Streamlit und eine statische HTML/JavaScript-Version auf GitHub Pages) mit eigenem Offline-Chatbot zur Fragenerkennung, sicherem Kontaktformular (Google Apps Script, Cloudflare Turnstile, automatische Antwort) und automatischer PDF-Erstellung – unter Einsatz des KI-Agenten Claude Code in der Entwicklung.",
+        },
+        "tech": ["Python", "Streamlit", "JavaScript", "GitHub Pages", "Google Apps Script", "Cloudflare Turnstile", "Claude Code"],
+    },
     {
         "id": "helpdesk",
         "emoji": "🚀",

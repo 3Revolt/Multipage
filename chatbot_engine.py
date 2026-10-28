@@ -208,12 +208,19 @@ KNOWLEDGE = [
     # --- AI i automatizacija ---
     {"id": "ai", "name": {"bs": "Umjetna inteligencija (AI / LLM)", "en": "Artificial intelligence (AI / LLM)", "de": "Künstliche Intelligenz (KI / LLM)"},
      "aliases": ["ai", "ki", "llm", "llms", "umjetn* inteligencij*", "vjestack* inteligencij*", "artificial intelligence", "kunstliche intelligenz",
-                 "machine learning", "masinsko ucenje", "masinskog ucenja", "generativ*", "genai", "gpt", "chatgpt", "openai", "claude", "langchain",
+                 "machine learning", "masinsko ucenje", "masinskog ucenja", "generativ*", "genai", "gpt", "chatgpt", "openai", "langchain",
                  "neural*", "neuronsk*", "prompt*", "rag"],
      "category": "ai", "projects": ["helpdesk", "ailab", "3d"]},
     {"id": "gemini", "name": "Gemini API", "aliases": ["gemini", "google ai", "bard"], "category": "ai", "projects": ["helpdesk"]},
     {"id": "ollama", "name": "Ollama", "aliases": ["ollama", "lokaln* llm*", "local llm*", "lokalni model*", "llama"], "category": "ai", "projects": ["ailab"]},
-    {"id": "agents", "name": "Multi-agent (AutoGen, Aider)", "aliases": ["autogen", "aider", "agent*", "multi agent*", "multiagent*"], "category": "ai"},
+    {"id": "agents", "name": {"bs": "AI agenti i automatizacija (Claude Code, Aider, AutoGen)", "en": "AI agents & automation (Claude Code, Aider, AutoGen)",
+                              "de": "KI-Agenten & Automatisierung (Claude Code, Aider, AutoGen)"},
+     "aliases": ["claude code:3", "claude:2", "anthropic", "autogen", "aider", "agent*", "agenat*", "agenata", "agentic", "multi agent*", "multiagent*",
+                 "coding agent*", "ai agent*", "ki agent*"],
+     "category": "ai", "projects": ["cvsite"]},
+    {"id": "appsscript", "name": "Google Apps Script", "aliases": ["apps script:3", "google apps script:4", "appsscript", "gas"], "category": "ai", "projects": ["cvsite"]},
+    {"id": "streamlit", "name": "Streamlit", "aliases": ["streamlit:2"], "category": "programming", "projects": ["cvsite"]},
+    {"id": "cloudflare", "name": "Cloudflare (Turnstile)", "aliases": ["cloudflare", "turnstile", "captcha", "recaptcha"], "category": "devops", "projects": ["cvsite"]},
     {"id": "gcloud", "name": "Google Cloud API", "aliases": ["google cloud", "gcp", "gcloud"], "category": "ai"},
     {"id": "vba", "name": "PowerPoint VBA", "aliases": ["vba", "makro*", "macro*", "powerpoint", "visual basic"], "category": "ai"},
     {"id": "automation", "name": {"bs": "Automatizacija", "en": "Automation", "de": "Automatisierung"},
@@ -223,8 +230,9 @@ KNOWLEDGE = [
     # --- DevOps ---
     {"id": "docker", "name": "Docker", "aliases": ["docker", "dokr", "kontejner*", "container*", "containeriz*"], "category": "devops", "projects": ["ailab"]},
     {"id": "linux", "name": "Linux (Ubuntu / Debian)", "aliases": ["linux", "ubuntu", "debian", "unix", "linuks"], "category": "devops", "projects": ["helpdesk", "ailab"]},
-    {"id": "cicd", "name": "CI/CD", "aliases": ["cicd", "pipeline*", "continuous integration", "deployment", "deploy*", "git", "github actions", "gitlab ci", "jenkins", "devops"],
-     "category": "devops"},
+    {"id": "cicd", "name": "CI/CD, Git / GitHub", "aliases": ["cicd", "pipeline*", "continuous integration", "deployment", "deploy*", "git", "github", "github actions",
+                                                    "github pages:2", "gitlab ci", "jenkins", "devops"],
+     "category": "devops", "projects": ["cvsite"]},
     {"id": "hosting", "name": {"bs": "Web hosting", "en": "Web hosting", "de": "Webhosting"}, "aliases": ["hosting", "hostinga", "webhosting", "cpanel", "domen*", "domain*"],
      "category": "devops", "evidence": ["hosting", "web portal"]},
     {"id": "macos", "name": "Mac OS", "aliases": ["mac", "macos", "apple", "osx", "macbook"], "category": "devops"},
@@ -486,6 +494,7 @@ ASPECT_MATCHER = KeywordMatcher(JOB_ASPECTS)
 COMPANY_MATCHER = KeywordMatcher({job["id"]: job["aliases"] for job in cv.JOBS}, fuzzy_cutoff=0.8)
 KNOWLEDGE_MATCHER = KeywordMatcher({item["id"]: item["aliases"] for item in KNOWLEDGE}, fuzzy_cutoff=0.88)
 PROJECT_ALIASES = {
+    "cvsite": ["ovaj sajt:3", "this site:3", "this website:3", "digital* cv:3", "interaktivn* cv:3", "interactive cv:3", "cv sajt:3", "cv website:3"],
     "helpdesk": ["ticketing:2", "ticket system*:3", "ticketsystem*:3", "tiket*:2", "help desk ticketing:4", "ai help desk:4", "help desk sistem*:3",
                  "helpdesk sistem*:3", "helpdesk system*:3", "help desk system*:3", "ai integracij*:3", "ai integration:3", "ki integration:3"],
     "ailab": ["ai lab:3", "local ai:3", "lokaln* ai:3", "development lab:3", "lab:1.5", "laboratorij*:1.5", "lokaln* okruzenj*:2"],
@@ -952,19 +961,19 @@ def answer_strengths(lang, state):
     return L(lang,
              f"Šta donosim timu:\n\n"
              f"- **{years}+ godina prakse** – od podrške korisnicima do sistemske administracije (Active Directory, mreže, serveri, sigurnost)\n"
-             f"- **Automatizacija** – pišem skripte i koristim alate za automatizaciju, plus AI integracije (Gemini API, Ollama)\n"
+             f"- **Automatizacija** – pišem skripte i koristim alate za automatizaciju, plus AI integracije i AI agente (Gemini API, Ollama, Claude Code)\n"
              f"- **Širina** – telekom, bankarski POS/ATM, ERP, javni sektor, web razvoj (React)\n"
              f"- **Komunikacija** – godine rada direktno sa korisnicima, pisanje dokumentacije i procedura\n"
              f"- **Brzo učenje** – samostalno sam razvio Help Desk sistem sa AI integracijom i lokalnu AI laboratoriju",
              f"What I bring to a team:\n\n"
              f"- **{years}+ years of hands-on work** – from user support to system administration (Active Directory, networks, servers, security)\n"
-             f"- **Automation** – I write scripts and use automation tools, plus AI integrations (Gemini API, Ollama)\n"
+             f"- **Automation** – I write scripts and use automation tools, plus AI integrations and AI agents (Gemini API, Ollama, Claude Code)\n"
              f"- **Breadth** – telecom, banking POS/ATM, ERP, public sector, web development (React)\n"
              f"- **Communication** – years of working directly with users, writing documentation and procedures\n"
              f"- **Fast learner** – I independently developed a help desk system with AI integration and a local AI lab",
              f"Was ich einem Team biete:\n\n"
              f"- **{years}+ Jahre Praxis** – vom Benutzersupport bis zur Systemadministration (Active Directory, Netzwerke, Server, Sicherheit)\n"
-             f"- **Automatisierung** – ich schreibe Skripte und nutze Automatisierungstools, dazu KI-Integrationen (Gemini API, Ollama)\n"
+             f"- **Automatisierung** – ich schreibe Skripte und nutze Automatisierungstools, dazu KI-Integrationen und KI-Agenten (Gemini API, Ollama, Claude Code)\n"
              f"- **Bandbreite** – Telekom, Bank-POS/ATM, ERP, öffentlicher Sektor, Webentwicklung (React)\n"
              f"- **Kommunikation** – jahrelange direkte Arbeit mit Benutzern, Erstellung von Dokumentationen und Verfahren\n"
              f"- **Schnelle Auffassungsgabe** – ich habe selbstständig ein Help-Desk-System mit KI-Integration und ein lokales KI-Labor entwickelt")
