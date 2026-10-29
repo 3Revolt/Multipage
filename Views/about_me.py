@@ -40,6 +40,43 @@ body {
     min-height: 100vh; /* Osiguraj da glavni sadržaj zauzima punu visinu */
 }
 
+/* Providna animacija pored naslova (servirana iz static/, da ostane animirana) */
+.hero-anim {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Sekcija "CV za preuzimanje": klik na animiranu fasciklu preuzima CV na izabranom jeziku */
+.cv-download-link {
+    position: relative;
+    display: inline-block;
+    width: 110px;
+    cursor: pointer;
+    transition: transform .2s ease, filter .2s ease;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .55));
+}
+.cv-download-link:hover, .cv-download-link:focus-visible {
+    transform: translateY(-3px) scale(1.06);
+    outline: none;
+    filter: drop-shadow(0 0 6px rgba(211, 54, 130, .9)) drop-shadow(0 6px 14px rgba(0, 0, 0, .6));
+}
+.cv-download-gif { display: block; width: 110px; height: auto; }
+.cv-download-badge {
+    position: absolute;
+    right: -10px;
+    bottom: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #d33682;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5);
+}
+
 /* Honeypot polje za botove - nevidljivo za ljude */
 .st-key-contact_website {
     position: absolute !important;
@@ -158,6 +195,7 @@ translations = {
     'English': {
         'contact_me': '✉️ Contact Me',
         'download_cv': '⬇️ Download CV',
+        'cv_section': '📄 Download my CV',
         'Skills': 'Technical Skills',
         'Education': 'Education',
         'Projects': 'Key Projects',
@@ -188,6 +226,7 @@ translations = {
     'Bosanski': {
         'contact_me': '✉️ Kontaktirajte me',
         'download_cv': '⬇️ Preuzmite CV',
+        'cv_section': '📄 CV za preuzimanje',
         'Skills': 'Tehničke vještine',
         'Education': 'Edukacija',
         'Projects': 'Ključni projekti',
@@ -218,6 +257,7 @@ translations = {
     'Deutsch': {
         'contact_me': '✉️ Kontaktieren Sie mich',
         'download_cv': '⬇️ CV herunterladen',
+        'cv_section': '📄 Lebenslauf herunterladen',
         'Skills': 'Technische Fähigkeiten',
         'Education': 'Die Ausbildung',
         'Projects': 'Wichtige Projekte',
@@ -248,10 +288,11 @@ translations = {
 }
 
 # Definiši putanje do CV-a za različite jezike
+# PDF-ovi su u static/ da bi se mogli preuzeti i direktnim linkom (klik na fasciklu)
 cv_paths = {
-    'English': f'{assets_dir}/CVeng.pdf',
-    'Bosanski': f'{assets_dir}/CVbos.pdf',
-    'Deutsch': f'{assets_dir}/CVde.pdf'
+    'English': 'static/CVeng.pdf',
+    'Bosanski': 'static/CVbos.pdf',
+    'Deutsch': 'static/CVde.pdf'
 }
 
 # Postavi podrazumevani jezik na Bosanski ako nije već postavljen
@@ -271,7 +312,8 @@ st.markdown(header_text)
 # --- HERO SECTION ---
 col1, col2 = st.columns(2, gap="small", vertical_alignment="center")
 with col1:
-    st.image(f"{assets_dir}/cv.gif", use_container_width=True)
+    # Providna animacija iz static/ (st.image bi animirani WebP pretvorio u nepomičnu sliku)
+    st.markdown(f'<img class="hero-anim" src="app/static/cv.webp" alt="{PERSONAL["name"]}" width="688" height="516">', unsafe_allow_html=True)
 
 
 with col2:
@@ -311,6 +353,18 @@ st.write('\n'.join(education_lines(lang)))
 st.write("\n")
 st.subheader(texts['Languages'], anchor=False)
 st.write('\n'.join(f"● {language['label'][lang]}" for language in LANGUAGES))
+
+# --- CV ZA PREUZIMANJE (klik na animiranu fasciklu) ---
+st.write("\n")
+st.subheader(texts['cv_section'], anchor=False)
+cv_file = cv_paths[selected_language].split("/")[-1]
+st.markdown(
+    f'<a class="cv-download-link" href="app/static/{cv_file}" download="CV_{selected_language}.pdf" '
+    f'title="{texts["download_cv"]}" aria-label="{texts["download_cv"]}">'
+    f'<img class="cv-download-gif" src="app/static/resume.webp" alt="">'
+    f'<span class="cv-download-badge" aria-hidden="true">⬇️</span></a>',
+    unsafe_allow_html=True,
+)
 
 # --- CONTACT FORM ---
 st.write("\n")
