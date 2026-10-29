@@ -408,7 +408,7 @@ JOBS = [
         "duties": {
             "bs": [
                 "Pružanje osnovne tehničke podrške korisnicima usluga (rješavanje problema) s eskalacijom problema na viši nivo",
-                "Konfigurisanje portova na mrežnim čvorovima za nove korisnike",
+                "Konfigurisanje portova na optičkim ostrvima za nove korisnike",
                 "Pozivanje korisnika, posebno u slučaju većih prekida i tehničkih problema",
                 "Unos svih relevantnih podataka korisnika u odgovarajuće baze podataka i aplikacije",
                 "Prodaja usluga i drugih ponuda pružatelja usluga rezidencijalnim korisnicima",
@@ -419,7 +419,7 @@ JOBS = [
             ],
             "en": [
                 "Providing primary technical support to service users (problem solving) with problem escalation to higher levels",
-                "Configuring ports on network nodes for new users",
+                "Configuring ports on fiber-optic islands for new users",
                 "Calling users, especially in the event of major outages and technical problems",
                 "Entering all relevant user data into the appropriate databases and applications",
                 "Selling services and other provider offers to residential users",
@@ -430,7 +430,7 @@ JOBS = [
             ],
             "de": [
                 "Bereitstellung primärer technischer Unterstützung für Servicenutzer (Problembehebung) mit Eskalation von Problemen auf höhere Ebenen",
-                "Konfiguration von Ports an Netzwerkknoten für neue Benutzer",
+                "Konfiguration von Ports auf Glasfaser-Inseln für neue Benutzer",
                 "Anrufen von Benutzern, besonders im Falle größerer Ausfälle und technischer Probleme",
                 "Eingabe aller relevanten Benutzerdaten in die entsprechenden Datenbanken und Anwendungen",
                 "Verkauf von Dienstleistungen und weiteren Angeboten des Anbieters an Privatkunden",
