@@ -408,7 +408,7 @@ JOBS = [
         "duties": {
             "bs": [
                 "Pružanje osnovne tehničke podrške korisnicima usluga (rješavanje problema) s eskalacijom problema na viši nivo",
-                "Konfigurisanje portova na mrežnim otocima za nove korisnike",
+                "Konfigurisanje portova na mrežnim čvorovima za nove korisnike",
                 "Pozivanje korisnika, posebno u slučaju većih prekida i tehničkih problema",
                 "Unos svih relevantnih podataka korisnika u odgovarajuće baze podataka i aplikacije",
                 "Prodaja usluga i drugih ponuda pružatelja usluga rezidencijalnim korisnicima",
